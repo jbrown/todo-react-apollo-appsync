@@ -1,10 +1,46 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import * as serviceWorker from "./serviceWorker";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import { ThemeProvider } from "pcln-design-system";
+import { createGlobalStyle } from "styled-components";
+import { normalize } from "polished";
+
+import Client from "aws-appsync";
+import { ApolloProvider } from "react-apollo";
+import { Rehydrated } from "aws-appsync-react";
+import awsConfig from "./aws-exports";
+
+const client = new Client({
+  url: awsConfig.aws_appsync_graphqlEndpoint,
+  region: awsConfig.aws_appsync_region,
+  auth: {
+    type: awsConfig.aws_appsync_authenticationType,
+    apiKey: awsConfig.aws_appsync_apiKey
+  }
+});
+
+const GlobalStyle = createGlobalStyle`
+  ${normalize()}
+`;
+
+const WithProvider = () => {
+  return (
+    <ApolloProvider client={client}>
+      <Rehydrated>
+        <ThemeProvider>
+          <div>
+            <GlobalStyle />
+            <App />
+          </div>
+        </ThemeProvider>
+      </Rehydrated>
+    </ApolloProvider>
+  );
+};
+
+ReactDOM.render(<WithProvider />, document.getElementById("root"));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
