@@ -1,0 +1,23 @@
+type List @model @versioned {
+  id: ID!
+  name: String!
+  createdAt: String
+  updatedAt: String
+  tasks: [Task] @connection(name: "ListTasks", sortField: "createdAt")
+}
+type Task @model @versioned {
+  id: ID!
+  name: String!
+  completed: Boolean!
+  createdAt: String
+  updatedAt: String
+  list: List @connection(name: "ListTasks")
+  comments: [Comment] @connection(name: "TaskComments", sortField: "createdAt")
+}
+type Comment @model @versioned {
+  id: ID!
+  content: String
+  createdAt: String
+  updatedAt: String
+  task: Task @connection(name: "TaskComments")
+}
