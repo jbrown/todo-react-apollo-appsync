@@ -1,14 +1,10 @@
 import React from "react";
-import { Box, Container, Heading } from "pcln-design-system";
+import { Box, Heading } from "pcln-design-system";
 
 export const Header = () => {
   return (
-    <Box bg="purple">
-      <Container maxWidth={800}>
-        <Box py={1}>
-          <Heading color="white">Todo</Heading>
-        </Box>
-      </Container>
+    <Box py={2} px={2} mb={2} bg="purple">
+      <Heading color="white">Todo</Heading>
     </Box>
   );
 };
