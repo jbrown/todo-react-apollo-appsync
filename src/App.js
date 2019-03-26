@@ -17,7 +17,7 @@ class App extends Component {
             <Box width={1 / 4} px={2}>
               <Lists lists={this.props.lists} />
             </Box>
-            <Box width={3 / 4}>
+            <Box width={3 / 4} px="2">
               <Route path="/lists/:id" component={List} />
             </Box>
           </Flex>
