@@ -3,6 +3,7 @@ import { Box } from "pcln-design-system";
 import { Link } from "react-router-dom";
 import gql from "graphql-tag";
 import { Query } from "react-apollo";
+import { List } from "../List";
 
 export const Lists = props => {
   return (
@@ -30,18 +31,6 @@ export const Lists = props => {
   );
 };
 
-Lists.fragments = {
-  list: gql`
-    fragment ListFields on List {
-      id
-      name
-      createdAt
-      updatedAt
-      version
-    }
-  `
-};
-
 Lists.queries = {
   listLists: gql`
     query ListLists(
@@ -56,6 +45,6 @@ Lists.queries = {
         nextToken
       }
     }
-    ${Lists.fragments.list}
+    ${List.fragments.list}
   `
 };

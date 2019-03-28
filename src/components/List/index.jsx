@@ -1,23 +1,9 @@
 import React from "react";
 import { Box, Flex } from "pcln-design-system";
-import { compose, graphql } from "react-apollo";
-import { graphqlMutation } from "aws-appsync-react";
 import gql from "graphql-tag";
-import { createTask, getList } from "../../graphql";
 import { QuickAdd } from "../index";
 
-export const List = compose(
-  graphql(gql(getList), {
-    options: props => ({
-      fetchPolicy: "cache-and-network",
-      variables: { id: props.match.params.id }
-    }),
-    props: props => ({
-      list: props.data.getList ? props.data.getList : { tasks: { items: [] } }
-    })
-  }),
-  graphqlMutation(gql(createTask), gql(getList), "Task")
-)(props => (
+export const List = props => (
   <Flex flexDirection="column">
     <QuickAdd
       placeholder="Add Task"
@@ -37,4 +23,22 @@ export const List = compose(
       ))}
     </Box>
   </Flex>
-));
+);
+
+List.fragments = {
+  list: gql`
+    fragment ListFields on List {
+      id
+      name
+      createdAt
+      updatedAt
+      version
+      tasks {
+        items {
+          id
+          name
+        }
+      }
+    }
+  `
+};
