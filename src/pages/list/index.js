@@ -1,7 +1,7 @@
 import React from "react";
 import { Query, Mutation } from "react-apollo";
 import gql from "graphql-tag";
-import { addToArray } from "../../lib";
+import { addToArray, removeFromArray } from "../../lib";
 import { List, Task } from "../../components";
 
 const updateCreateTask = (client, { data: { createTask } }, variables) => {
@@ -15,6 +15,27 @@ const updateCreateTask = (client, { data: { createTask } }, variables) => {
       tasks: {
         ...origList.getList.tasks,
         items: addToArray(origList.getList.tasks.items, createTask)
+      }
+    }
+  };
+  client.writeQuery({
+    query: ListPage.queries.list,
+    variables,
+    data
+  });
+};
+
+const updateDeleteTask = (client, { data: { deleteTask } }, variables) => {
+  let origList = client.readQuery({
+    query: ListPage.queries.list,
+    variables
+  });
+  let data = {
+    getList: {
+      ...origList.getList,
+      tasks: {
+        ...origList.getList.tasks,
+        items: removeFromArray(origList.getList.tasks.items, deleteTask)
       }
     }
   };
@@ -40,33 +61,49 @@ export const ListPage = props => (
       }
       return (
         <Mutation
-          mutation={ListPage.mutations.createTask}
+          mutation={ListPage.mutations.deleteTask}
           update={(client, mutationResult) =>
-            updateCreateTask(client, mutationResult, {
+            updateDeleteTask(client, mutationResult, {
               id: props.match.params.id
             })
           }
         >
-          {createTask => (
-            <List
-              list={data.getList}
-              createTask={taskProps =>
-                createTask({
-                  variables: { input: taskProps },
-                  optimisticResponse: {
-                    __typename: "Mutation",
-                    createTask: {
-                      __typename: "Task",
-                      ...taskProps,
-                      id: "-1",
-                      createdAt: "",
-                      updatedAt: "",
-                      version: 1
-                    }
-                  }
+          {deleteTask => (
+            <Mutation
+              mutation={ListPage.mutations.createTask}
+              update={(client, mutationResult) =>
+                updateCreateTask(client, mutationResult, {
+                  id: props.match.params.id
                 })
               }
-            />
+            >
+              {createTask => (
+                <List
+                  list={data.getList}
+                  createTask={taskProps =>
+                    createTask({
+                      variables: { input: taskProps },
+                      optimisticResponse: {
+                        __typename: "Mutation",
+                        createTask: {
+                          __typename: "Task",
+                          ...taskProps,
+                          id: "-1",
+                          createdAt: "",
+                          updatedAt: "",
+                          version: 1
+                        }
+                      }
+                    })
+                  }
+                  deleteTask={(id, expectedVersion) =>
+                    deleteTask({
+                      variables: { input: { id, expectedVersion } }
+                    })
+                  }
+                />
+              )}
+            </Mutation>
           )}
         </Mutation>
       );
@@ -93,5 +130,12 @@ ListPage.mutations = {
       }
     }
     ${Task.fragments.task}
+  `,
+  deleteTask: gql`
+    mutation DeleteTask($input: DeleteTaskInput!) {
+      deleteTask(input: $input) {
+        id
+      }
+    }
   `
 };
