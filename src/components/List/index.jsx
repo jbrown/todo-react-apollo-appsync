@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Flex } from "pcln-design-system";
 import gql from "graphql-tag";
 import { QuickAdd } from "../index";
+import { Task } from "../Task";
 
 export const List = props => (
   <Flex flexDirection="column">
@@ -19,7 +20,7 @@ export const List = props => (
     />
     <Box>
       {props.list.tasks.items.map(item => (
-        <Box key={item.id}>{item.name}</Box>
+        <Task key={item.id} {...item} />
       ))}
     </Box>
   </Flex>
@@ -35,10 +36,10 @@ List.fragments = {
       version
       tasks {
         items {
-          id
-          name
+          ...TaskFields
         }
       }
     }
+    ${Task.fragments.task}
   `
 };
