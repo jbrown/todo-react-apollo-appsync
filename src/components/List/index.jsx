@@ -4,7 +4,7 @@ import { compose, graphql } from "react-apollo";
 import { graphqlMutation } from "aws-appsync-react";
 import gql from "graphql-tag";
 import { createTask, getList } from "../../graphql";
-import { QuickAddTask } from "../index";
+import { QuickAdd } from "../index";
 
 export const List = compose(
   graphql(gql(getList), {
@@ -19,7 +19,8 @@ export const List = compose(
   graphqlMutation(gql(createTask), gql(getList), "Task")
 )(props => (
   <Flex flexDirection="column">
-    <QuickAddTask
+    <QuickAdd
+      placeholder="Add Task"
       onSubmit={value =>
         props.createTask({
           input: {

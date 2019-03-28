@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Flex, Input } from "pcln-design-system";
 
-export class QuickAddTask extends React.Component {
+export class QuickAdd extends React.Component {
   state = {
     name: ""
   };
@@ -18,8 +18,8 @@ export class QuickAddTask extends React.Component {
     return (
       <Flex flexDirection="row" mb={2}>
         <Input
-          id="newTask"
-          placeholder="Add Task"
+          id="quickAdd"
+          placeholder={this.props.placeholder}
           value={this.state.name}
           onChange={e => this.setState({ name: e.target.value })}
         />
