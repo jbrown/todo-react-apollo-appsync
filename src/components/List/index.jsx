@@ -3,8 +3,8 @@ import { Box, Flex } from "pcln-design-system";
 import { compose, graphql } from "react-apollo";
 import { graphqlMutation } from "aws-appsync-react";
 import gql from "graphql-tag";
-import { createTask, getList } from "../graphql";
-import { QuickAddTask } from "./index";
+import { createTask, getList } from "../../graphql";
+import { QuickAddTask } from "../index";
 
 export const List = compose(
   graphql(gql(getList), {
