@@ -1,7 +1,29 @@
 import React from "react";
-import { Query } from "react-apollo";
+import { Query, Mutation } from "react-apollo";
 import gql from "graphql-tag";
-import { List } from "../../components";
+import { addToArray } from "../../lib";
+import { List, Task } from "../../components";
+
+const updateCreateTask = (client, { data: { createTask } }, variables) => {
+  let origList = client.readQuery({
+    query: ListPage.queries.list,
+    variables
+  });
+  let data = {
+    getList: {
+      ...origList.getList,
+      tasks: {
+        ...origList.getList.tasks,
+        items: addToArray(origList.getList.tasks.items, createTask)
+      }
+    }
+  };
+  client.writeQuery({
+    query: ListPage.queries.list,
+    variables,
+    data
+  });
+};
 
 export const ListPage = props => (
   <Query
@@ -16,7 +38,38 @@ export const ListPage = props => (
       if (loading && !data.getList) {
         return "Loading...";
       }
-      return <List list={data.getList} />;
+      return (
+        <Mutation
+          mutation={ListPage.mutations.createTask}
+          update={(client, mutationResult) =>
+            updateCreateTask(client, mutationResult, {
+              id: props.match.params.id
+            })
+          }
+        >
+          {createTask => (
+            <List
+              list={data.getList}
+              createTask={taskProps =>
+                createTask({
+                  variables: { input: taskProps },
+                  optimisticResponse: {
+                    __typename: "Mutation",
+                    createTask: {
+                      __typename: "Task",
+                      ...taskProps,
+                      id: "-1",
+                      createdAt: "",
+                      updatedAt: "",
+                      version: 1
+                    }
+                  }
+                })
+              }
+            />
+          )}
+        </Mutation>
+      );
     }}
   </Query>
 );
@@ -29,5 +82,16 @@ ListPage.queries = {
       }
     }
     ${List.fragments.list}
+  `
+};
+
+ListPage.mutations = {
+  createTask: gql`
+    mutation CreateTask($input: CreateTaskInput!) {
+      createTask(input: $input) {
+        ...TaskFields
+      }
+    }
+    ${Task.fragments.task}
   `
 };

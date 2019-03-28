@@ -4,22 +4,20 @@ import gql from "graphql-tag";
 import { QuickAdd } from "../index";
 import { Task } from "../Task";
 
-export const List = props => (
+export const List = ({ createTask, list }) => (
   <Flex flexDirection="column">
     <QuickAdd
       placeholder="Add Task"
       onSubmit={value =>
-        props.createTask({
-          input: {
-            name: value,
-            taskListId: props.list.id,
-            completed: false
-          }
+        createTask({
+          name: value,
+          taskListId: list.id,
+          completed: false
         })
       }
     />
     <Box>
-      {props.list.tasks.items.map(item => (
+      {list.tasks.items.map(item => (
         <Task key={item.id} {...item} />
       ))}
     </Box>

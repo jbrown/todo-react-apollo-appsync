@@ -9,6 +9,9 @@ Task.fragments = {
     fragment TaskFields on Task {
       id
       name
+      completed
+      createdAt
+      updatedAt
       version
     }
   `
