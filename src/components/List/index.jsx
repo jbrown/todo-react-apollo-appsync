@@ -4,7 +4,7 @@ import gql from "graphql-tag";
 import { QuickAdd } from "../index";
 import { Task } from "../Task";
 
-export const List = ({ createTask, deleteTask, list }) => (
+export const List = ({ createTask, updateTask, deleteTask, list }) => (
   <Flex flexDirection="column">
     <QuickAdd
       placeholder="Add Task"
@@ -21,6 +21,7 @@ export const List = ({ createTask, deleteTask, list }) => (
         <Task
           key={item.id}
           {...item}
+          onUpdate={newProps => updateTask(item, newProps)}
           onDelete={() => deleteTask(item.id, item.version)}
         />
       ))}
