@@ -145,7 +145,14 @@ export const ListPage = props => (
                       }
                       deleteTask={(id, expectedVersion) =>
                         deleteTask({
-                          variables: { input: { id, expectedVersion } }
+                          variables: { input: { id, expectedVersion } },
+                          optimisticResponse: {
+                            __typename: "Mutation",
+                            deleteTask: {
+                              __typename: "Task",
+                              id
+                            }
+                          }
                         })
                       }
                     />
