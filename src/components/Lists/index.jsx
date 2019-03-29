@@ -1,9 +1,9 @@
 import React from "react";
-import { Box, Flex } from "pcln-design-system";
+import { Box, CloseButton, Flex } from "pcln-design-system";
 import { Link } from "react-router-dom";
 import gql from "graphql-tag";
 import { Query, Mutation } from "react-apollo";
-import { addToArray } from "../../lib";
+import { addToArray, removeFromArray } from "../../lib";
 import { List } from "../List";
 import { QuickAdd } from "../index";
 
@@ -13,6 +13,17 @@ const updateCreateList = (client, { data: { createList } }) => {
     listLists: {
       ...origList.listLists,
       items: addToArray(origList.listLists.items, createList)
+    }
+  };
+  client.writeQuery({ query: Lists.queries.listLists, data });
+};
+
+const updateDeleteList = (client, { data: { deleteList } }) => {
+  let origList = client.readQuery({ query: Lists.queries.listLists });
+  let data = {
+    listLists: {
+      ...origList.listLists,
+      items: removeFromArray(origList.listLists.items, deleteList)
     }
   };
   client.writeQuery({ query: Lists.queries.listLists, data });
@@ -63,11 +74,37 @@ export const Lists = props => {
               )}
             </Mutation>
             <Box>
-              {data.listLists.items.map(item => (
-                <Box key={item.id}>
-                  <Link to={"/lists/" + item.id}>{item.name}</Link>
-                </Box>
-              ))}
+              <Mutation
+                mutation={Lists.mutations.delete}
+                update={updateDeleteList}
+              >
+                {deleteList =>
+                  data.listLists.items.map(item => (
+                    <Box key={item.id}>
+                      <Link to={"/lists/" + item.id}>{item.name}</Link>
+                      <CloseButton
+                        onClick={() =>
+                          deleteList({
+                            optimisticResponse: {
+                              __typename: "Mutation",
+                              deleteList: {
+                                __typename: "List",
+                                ...item
+                              }
+                            },
+                            variables: {
+                              input: {
+                                id: item.id,
+                                expectedVersion: item.version
+                              }
+                            }
+                          })
+                        }
+                      />
+                    </Box>
+                  ))
+                }
+              </Mutation>
             </Box>
           </Flex>
         );
@@ -98,6 +135,14 @@ Lists.mutations = {
   create: gql`
     mutation CreateList($input: CreateListInput!) {
       createList(input: $input) {
+        ...ListFields
+      }
+    }
+    ${List.fragments.list}
+  `,
+  delete: gql`
+    mutation DeleteList($input: DeleteListInput!) {
+      deleteList(input: $input) {
         ...ListFields
       }
     }
