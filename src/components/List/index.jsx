@@ -6,16 +6,7 @@ import { Task } from "../Task";
 
 export const List = ({ createTask, updateTask, deleteTask, list }) => (
   <Flex flexDirection="column">
-    <QuickAdd
-      placeholder="Add Task"
-      onSubmit={value =>
-        createTask({
-          name: value,
-          taskListId: list.id,
-          completed: false
-        })
-      }
-    />
+    <QuickAdd placeholder="Add Task" onSubmit={createTask} />
     <Box>
       {list.tasks.items.map(item => (
         <Task

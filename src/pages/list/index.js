@@ -107,18 +107,30 @@ export const ListPage = props => (
                   {createTask => (
                     <List
                       list={data.getList}
-                      createTask={taskProps =>
+                      createTask={name =>
                         createTask({
-                          variables: { input: taskProps },
+                          variables: {
+                            input: {
+                              name,
+                              taskListId: data.getList.id,
+                              completed: false
+                            }
+                          },
                           optimisticResponse: {
                             __typename: "Mutation",
                             createTask: {
                               __typename: "Task",
-                              ...taskProps,
                               id: "-1",
+                              name,
+                              completed: false,
                               createdAt: "",
                               updatedAt: "",
-                              version: 1
+                              version: 1,
+                              comments: {
+                                __typename: "ModelCommentConnection",
+                                items: [],
+                                nextToken: null
+                              }
                             }
                           }
                         })
