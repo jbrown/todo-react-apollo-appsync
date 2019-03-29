@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, CloseButton, Flex } from "pcln-design-system";
+import { Box, OutlineButton, CloseButton, Flex } from "pcln-design-system";
 import { Link } from "react-router-dom";
 import gql from "graphql-tag";
 import { Query, Mutation } from "react-apollo";
@@ -29,10 +29,27 @@ const updateDeleteList = (client, { data: { deleteList } }) => {
   client.writeQuery({ query: Lists.queries.listLists, data });
 };
 
+const updateListsFetchMore = (previousResult, { fetchMoreResult }) => {
+  let {
+    listLists: { __typename, items: oldItems }
+  } = previousResult;
+  let {
+    listLists: { items: newItems, nextToken }
+  } = fetchMoreResult;
+
+  return {
+    listLists: {
+      __typename,
+      items: [...oldItems, ...newItems],
+      nextToken
+    }
+  };
+};
+
 export const Lists = props => {
   return (
     <Query query={Lists.queries.listLists} fetchPolicy="cache-and-network">
-      {({ data, loading, error }) => {
+      {({ data, loading, error, fetchMore }) => {
         if (error) {
           return "Error!";
         }
@@ -105,6 +122,20 @@ export const Lists = props => {
                   ))
                 }
               </Mutation>
+              {data.listLists.nextToken ? (
+                <OutlineButton
+                  size="small"
+                  onClick={() =>
+                    fetchMore({
+                      query: Lists.queries.listLists,
+                      variables: { nextToken: data.listLists.nextToken },
+                      updateQuery: updateListsFetchMore
+                    })
+                  }
+                >
+                  Fetch More {loading && "..."}
+                </OutlineButton>
+              ) : null}
             </Box>
           </Flex>
         );
