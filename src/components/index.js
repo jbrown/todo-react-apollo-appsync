@@ -1,3 +1,4 @@
+export * from "./Comment";
 export * from "./Header";
 export * from "./Lists";
 export * from "./List";

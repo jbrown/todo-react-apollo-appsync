@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Box, Flex } from "pcln-design-system";
 import { Header, Lists } from "./components";
-import { ListPage } from "./pages";
+import { ListPage, TaskPage } from "./pages";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 export default class App extends Component {
@@ -17,6 +17,7 @@ export default class App extends Component {
             </Box>
             <Box width={3 / 4} px="2">
               <Route path="/lists/:id" component={ListPage} />
+              <Route path="/tasks/:id" component={TaskPage} />
             </Box>
           </Flex>
         </Flex>
