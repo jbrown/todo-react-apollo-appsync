@@ -1,19 +1,22 @@
 import React from "react";
-import { Flex, Box, Button, CloseButton, Truncate } from "pcln-design-system";
+import { Flex, OutlineButton, CloseButton, Truncate } from "pcln-design-system";
 import gql from "graphql-tag";
 import { Link } from "react-router-dom";
-import { Comment } from "../index";
+import { Box, Comment } from "../index";
 
 export const Task = ({ completed, id, name, onUpdate, onDelete }) => (
-  <Flex flexDirection="row">
-    <Box width={1}>
+  <Flex flexDirection="row" mb={1}>
+    <Box flex={1}>
       <Link to={"/tasks/" + id}>
         <Truncate>{name}</Truncate>
       </Link>
     </Box>
-    <Button onClick={() => onUpdate({ completed: !completed })}>
+    <OutlineButton
+      size="small"
+      onClick={() => onUpdate({ completed: !completed })}
+    >
       {completed ? "Incomplete" : "Complete"}
-    </Button>
+    </OutlineButton>
     <CloseButton onClick={onDelete}>delete</CloseButton>
   </Flex>
 );

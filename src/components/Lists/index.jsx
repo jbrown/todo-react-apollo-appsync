@@ -1,11 +1,11 @@
 import React from "react";
-import { Box, OutlineButton, CloseButton, Flex } from "pcln-design-system";
+import { OutlineButton, CloseButton, Flex } from "pcln-design-system";
 import { Link } from "react-router-dom";
 import gql from "graphql-tag";
 import { Query, Mutation } from "react-apollo";
 import { addToArray, removeFromArray } from "../../lib";
 import { List } from "../List";
-import { QuickAdd } from "../index";
+import { Box, QuickAdd } from "../index";
 
 const updateCreateList = (client, { data: { createList } }) => {
   let origList = client.readQuery({ query: Lists.queries.listLists });
@@ -97,8 +97,10 @@ export const Lists = props => {
               >
                 {deleteList =>
                   data.listLists.items.map(item => (
-                    <Box key={item.id}>
-                      <Link to={"/lists/" + item.id}>{item.name}</Link>
+                    <Flex key={item.id} flexDirection="row">
+                      <Box flex={1}>
+                        <Link to={"/lists/" + item.id}>{item.name}</Link>
+                      </Box>
                       <CloseButton
                         onClick={() =>
                           deleteList({
@@ -118,7 +120,7 @@ export const Lists = props => {
                           })
                         }
                       />
-                    </Box>
+                    </Flex>
                   ))
                 }
               </Mutation>

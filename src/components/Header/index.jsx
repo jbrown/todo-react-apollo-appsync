@@ -1,5 +1,6 @@
 import React from "react";
-import { Box, Heading } from "pcln-design-system";
+import { Heading } from "pcln-design-system";
+import { Box } from "../index";
 
 export const Header = () => {
   return (

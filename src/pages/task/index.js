@@ -1,8 +1,8 @@
 import React from "react";
 import { Mutation, Query } from "react-apollo";
 import gql from "graphql-tag";
-import { Box, Flex } from "pcln-design-system";
-import { Comment, QuickAdd, Task } from "../../components";
+import { Card, Flex } from "pcln-design-system";
+import { Box, Comment, QuickAdd, Task } from "../../components";
 import { addToArray } from "../../lib";
 
 const updateCreateComment = (client, { data: { createComment } }, taskId) => {
@@ -39,11 +39,13 @@ export const TaskPage = ({ match }) => (
 
       return (
         <Flex flexDirection="column">
-          <Box>{task.name}</Box>
-          <Box>Comments ({task.comments.items.length})</Box>
+          <Box mb={2}>{task.name}</Box>
+          <Box mb={2}>Comments ({task.comments.items.length})</Box>
           <Box>
             {task.comments.items.map(item => (
-              <Comment key={item.id} {...item} />
+              <Card key={item.id} p={2} mb={2} borderRadius={4}>
+                <Comment {...item} />
+              </Card>
             ))}
           </Box>
           <Mutation
