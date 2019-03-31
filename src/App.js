@@ -2,26 +2,40 @@ import React, { Component } from "react";
 import { Flex } from "pcln-design-system";
 import { Box, Header, Lists } from "./components";
 import { ListPage, TaskPage } from "./pages";
-import { BrowserRouter as Router, Route } from "react-router-dom";
 
 export default class App extends Component {
+  state = {
+    selectedList: null,
+    selectedTask: null
+  };
+
   render() {
+    let { selectedList, selectedTask } = this.state;
+
     return (
-      <Router>
-        <Flex flexDirection="column">
-          <Header />
-          <Flex flexDirection="row" width={1}>
-            <Box flex={0.5} px={2}>
-              <Lists />
-            </Box>
-            <Box flex={1} px={2}>
-              <Route path="/lists/:id" component={ListPage} />
-              <Route path="/tasks/:id" component={TaskPage} />
-            </Box>
-            <Box flex={1} px={2} />
-          </Flex>
+      <Flex flexDirection="column">
+        <Header />
+        <Flex flexDirection="row" width={1}>
+          <Box flex={0.5} px={2}>
+            <Lists
+              selectedList={selectedList}
+              onSelectList={list => this.setState({ selectedList: list })}
+            />
+          </Box>
+          <Box flex={1} px={2}>
+            {selectedList ? (
+              <ListPage
+                list={selectedList}
+                selectedTask={selectedTask}
+                onSelectTask={task => this.setState({ selectedTask: task })}
+              />
+            ) : null}
+          </Box>
+          <Box flex={1} px={2}>
+            {selectedTask ? <TaskPage task={selectedTask} /> : null}
+          </Box>
         </Flex>
-      </Router>
+      </Flex>
     );
   }
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import { Query, Mutation } from "react-apollo";
+import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
 import { addToArray, removeFromArray } from "../../lib";
 import { List, Task } from "../../components";
@@ -64,119 +64,105 @@ const updateDeleteTask = (client, { data: { deleteTask } }, variables) => {
   });
 };
 
-export const ListPage = props => (
-  <Query
-    fetchPolicy="cache-and-network"
-    query={ListPage.queries.list}
-    variables={{ id: props.match.params.id }}
+export const ListPage = ({ list, selectedTask, onSelectTask }) => (
+  <Mutation
+    mutation={ListPage.mutations.deleteTask}
+    update={(client, mutationResult) =>
+      updateDeleteTask(client, mutationResult, {
+        id: list.id
+      })
+    }
   >
-    {({ data, loading, error }) => {
-      if (error) {
-        return `Error: ${error}`;
-      }
-      if (loading && !data.getList) {
-        return "Loading...";
-      }
-      return (
-        <Mutation
-          mutation={ListPage.mutations.deleteTask}
-          update={(client, mutationResult) =>
-            updateDeleteTask(client, mutationResult, {
-              id: props.match.params.id
-            })
-          }
-        >
-          {deleteTask => (
-            <Mutation
-              mutation={ListPage.mutations.updateTask}
-              update={(client, mutationResult) =>
-                updateUpdateTask(client, mutationResult, {
-                  id: props.match.params.id
-                })
-              }
-            >
-              {updateTask => (
-                <Mutation
-                  mutation={ListPage.mutations.createTask}
-                  update={(client, mutationResult) =>
-                    updateCreateTask(client, mutationResult, {
-                      id: props.match.params.id
-                    })
-                  }
-                >
-                  {createTask => (
-                    <List
-                      list={data.getList}
-                      createTask={name =>
-                        createTask({
-                          variables: {
-                            input: {
-                              name,
-                              taskListId: data.getList.id,
-                              completed: false
-                            }
-                          },
-                          optimisticResponse: {
-                            __typename: "Mutation",
-                            createTask: {
-                              __typename: "Task",
-                              id: "-1",
-                              name,
-                              completed: false,
-                              createdAt: "",
-                              updatedAt: "",
-                              version: 1,
-                              comments: {
-                                __typename: "ModelCommentConnection",
-                                items: [],
-                                nextToken: null
-                              }
-                            }
-                          }
-                        })
+    {deleteTask => (
+      <Mutation
+        mutation={ListPage.mutations.updateTask}
+        update={(client, mutationResult) =>
+          updateUpdateTask(client, mutationResult, {
+            id: list.id
+          })
+        }
+      >
+        {updateTask => (
+          <Mutation
+            mutation={ListPage.mutations.createTask}
+            update={(client, mutationResult) =>
+              updateCreateTask(client, mutationResult, {
+                id: list.id
+              })
+            }
+          >
+            {createTask => (
+              <List
+                list={list}
+                selectedTask={selectedTask}
+                onSelectTask={onSelectTask}
+                createTask={name =>
+                  createTask({
+                    variables: {
+                      input: {
+                        name,
+                        taskListId: list.id,
+                        completed: false
                       }
-                      updateTask={(task, newProps) =>
-                        updateTask({
-                          variables: {
-                            input: {
-                              ...newProps,
-                              id: task.id,
-                              expectedVersion: task.version
-                            }
-                          },
-                          optimisticResponse: {
-                            __typename: "Mutation",
-                            updateTask: {
-                              __typename: "Task",
-                              ...task,
-                              ...newProps,
-                              version: task.version + 1
-                            }
-                          }
-                        })
+                    },
+                    optimisticResponse: {
+                      __typename: "Mutation",
+                      createTask: {
+                        __typename: "Task",
+                        id: "-1",
+                        name,
+                        completed: false,
+                        createdAt: "",
+                        updatedAt: "",
+                        version: 1,
+                        comments: {
+                          __typename: "ModelCommentConnection",
+                          items: [],
+                          nextToken: null
+                        }
                       }
-                      deleteTask={(id, expectedVersion) =>
-                        deleteTask({
-                          variables: { input: { id, expectedVersion } },
-                          optimisticResponse: {
-                            __typename: "Mutation",
-                            deleteTask: {
-                              __typename: "Task",
-                              id
-                            }
-                          }
-                        })
+                    }
+                  })
+                }
+                updateTask={(task, newProps) =>
+                  updateTask({
+                    variables: {
+                      input: {
+                        ...newProps,
+                        id: task.id,
+                        expectedVersion: task.version
                       }
-                    />
-                  )}
-                </Mutation>
-              )}
-            </Mutation>
-          )}
-        </Mutation>
-      );
-    }}
-  </Query>
+                    },
+                    optimisticResponse: {
+                      __typename: "Mutation",
+                      updateTask: {
+                        __typename: "Task",
+                        ...task,
+                        ...newProps,
+                        version: task.version + 1
+                      }
+                    }
+                  })
+                }
+                deleteTask={(id, expectedVersion) =>
+                  deleteTask({
+                    variables: { input: { id, expectedVersion } },
+                    optimisticResponse: {
+                      __typename: "Mutation",
+                      deleteTask: {
+                        __typename: "Task",
+                        id
+                      }
+                    }
+                  })
+                }
+              />
+            )}
+          </Mutation>
+        )}
+      </Mutation>
+    )}
+  </Mutation>
 );
 
 ListPage.queries = {

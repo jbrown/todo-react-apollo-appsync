@@ -1,6 +1,5 @@
 import React from "react";
-import { OutlineButton, CloseButton, Flex } from "pcln-design-system";
-import { Link } from "react-router-dom";
+import { OutlineButton, CloseButton, Flex, Text } from "pcln-design-system";
 import gql from "graphql-tag";
 import { Query, Mutation } from "react-apollo";
 import { addToArray, removeFromArray } from "../../lib";
@@ -46,9 +45,17 @@ const updateListsFetchMore = (previousResult, { fetchMoreResult }) => {
   };
 };
 
-export const Lists = props => {
+export const Lists = ({ selectedList, onSelectList }) => {
   return (
-    <Query query={Lists.queries.listLists} fetchPolicy="cache-and-network">
+    <Query
+      query={Lists.queries.listLists}
+      fetchPolicy="cache-and-network"
+      onCompleted={data => {
+        if (!selectedList && data.listLists.items.length > 0) {
+          onSelectList(data.listLists.items[0]);
+        }
+      }}
+    >
       {({ data, loading, error, fetchMore }) => {
         if (error) {
           return "Error!";
@@ -98,8 +105,17 @@ export const Lists = props => {
                 {deleteList =>
                   data.listLists.items.map(item => (
                     <Flex key={item.id} flexDirection="row">
-                      <Box flex={1}>
-                        <Link to={"/lists/" + item.id}>{item.name}</Link>
+                      <Box
+                        flex={1}
+                        bg={
+                          !!selectedList && item.id === selectedList.id
+                            ? "#fff6dd"
+                            : null
+                        }
+                      >
+                        <Text onClick={() => onSelectList(item)}>
+                          {item.name}
+                        </Text>
                       </Box>
                       <CloseButton
                         onClick={() =>

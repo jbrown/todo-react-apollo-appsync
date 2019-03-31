@@ -1,5 +1,5 @@
 import React from "react";
-import { Mutation, Query } from "react-apollo";
+import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
 import { Card, Flex } from "pcln-design-system";
 import { Box, Comment, QuickAdd, Task } from "../../components";
@@ -26,62 +26,48 @@ const updateCreateComment = (client, { data: { createComment } }, taskId) => {
   });
 };
 
-export const TaskPage = ({ match }) => (
-  <Query query={TaskPage.queries.getTask} variables={{ id: match.params.id }}>
-    {({ data: { getTask: task }, loading, error }) => {
-      if (error) {
-        return `Error: ${error}`;
+export const TaskPage = ({ task }) => (
+  <Flex flexDirection="column">
+    <Box mb={2}>{task.name}</Box>
+    <Box mb={2}>Comments ({task.comments.items.length})</Box>
+    <Box>
+      {task.comments.items.map(item => (
+        <Card key={item.id} p={2} mb={2} borderRadius={4}>
+          <Comment {...item} />
+        </Card>
+      ))}
+    </Box>
+    <Mutation
+      mutation={TaskPage.mutations.createComment}
+      update={(client, mutationResult) =>
+        updateCreateComment(client, mutationResult, task.id)
       }
-
-      if (loading && !task) {
-        return "Loading...";
-      }
-
-      return (
-        <Flex flexDirection="column">
-          <Box mb={2}>{task.name}</Box>
-          <Box mb={2}>Comments ({task.comments.items.length})</Box>
-          <Box>
-            {task.comments.items.map(item => (
-              <Card key={item.id} p={2} mb={2} borderRadius={4}>
-                <Comment {...item} />
-              </Card>
-            ))}
-          </Box>
-          <Mutation
-            mutation={TaskPage.mutations.createComment}
-            update={(client, mutationResult) =>
-              updateCreateComment(client, mutationResult, task.id)
-            }
-          >
-            {createComment => (
-              <QuickAdd
-                placeholder="Add Comment"
-                onSubmit={value =>
-                  createComment({
-                    optimisticResponse: {
-                      __typename: "Mutation",
-                      createComment: {
-                        __typename: "Comment",
-                        id: "-1",
-                        content: value,
-                        commentTaskId: task.id,
-                        createdAt: "",
-                        updatedAt: ""
-                      }
-                    },
-                    variables: {
-                      input: { content: value, commentTaskId: task.id }
-                    }
-                  })
+    >
+      {createComment => (
+        <QuickAdd
+          placeholder="Add Comment"
+          onSubmit={value =>
+            createComment({
+              optimisticResponse: {
+                __typename: "Mutation",
+                createComment: {
+                  __typename: "Comment",
+                  id: "-1",
+                  content: value,
+                  commentTaskId: task.id,
+                  createdAt: "",
+                  updatedAt: ""
                 }
-              />
-            )}
-          </Mutation>
-        </Flex>
-      );
-    }}
-  </Query>
+              },
+              variables: {
+                input: { content: value, commentTaskId: task.id }
+              }
+            })
+          }
+        />
+      )}
+    </Mutation>
+  </Flex>
 );
 
 TaskPage.queries = {
