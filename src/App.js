@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { compose, graphql } from "react-apollo";
 import { createGlobalStyle } from "styled-components";
-import { Box, Flex, Header, List } from "./components";
-import { ListSidebar } from "./features";
+import { Box, Flex, Header } from "./components";
+import { ListDetail, ListSidebar } from "./features";
 import {
   Task,
   updateCreateTask,
@@ -39,7 +39,7 @@ class App extends Component {
           </Box>
           <Box flex={1} p={2} bg="#fff" borderRadius={6}>
             {selectedList ? (
-              <List
+              <ListDetail
                 list={selectedList}
                 selectedTask={selectedTask}
                 onSelectTask={task => this.setState({ selectedTask: task })}

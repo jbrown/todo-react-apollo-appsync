@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Query } from "react-apollo";
 import { ToggleBadge } from "pcln-design-system";
-import { Box, Flex, QuickAdd } from "../index";
-import TaskList from "../../features/Task/List";
-import { getListQuery } from "../../features/List/graphql";
+import { Box, Flex, QuickAdd } from "../../../components";
+import TaskList from "../../Task/List";
+import { getListQuery } from "../graphql";
 
-export const List = ({
+export const ListDetail = ({
   onCreate,
   onDelete,
   onUpdate,
