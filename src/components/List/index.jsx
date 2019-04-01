@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Flex, QuickAdd } from "../index";
-import { Task } from "../Task";
+import TaskList from "../../features/Task/List";
 
 export const List = ({
   createTask,
@@ -13,16 +13,11 @@ export const List = ({
   <Flex flexDirection="column">
     <QuickAdd placeholder="Add Task" onSubmit={createTask} />
     <Box>
-      {list.tasks.items.map(item => (
-        <Task
-          key={item.id}
-          {...item}
-          isSelected={selectedTask && item.id === selectedTask.id}
-          onSelect={() => onSelectTask(item)}
-          onUpdate={newProps => updateTask(item, newProps)}
-          onDelete={() => deleteTask(item.id, item.version)}
-        />
-      ))}
+      <TaskList
+        tasks={list.tasks.items}
+        onSelectTask={onSelectTask}
+        selectedTask={selectedTask}
+      />
     </Box>
   </Flex>
 );
