@@ -17,7 +17,7 @@ export class QuickAdd extends React.Component {
 
   render() {
     return (
-      <Flex flexDirection="row" mb={2}>
+      <Flex flexDirection="row" {...this.props}>
         <Input
           id="quickAdd"
           placeholder={this.props.placeholder}

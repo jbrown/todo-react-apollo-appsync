@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { createGlobalStyle } from "styled-components";
-import { Box, Flex, Header, Lists } from "./components";
+import { Box, Flex, Header } from "./components";
 import { ListPage, TaskPage } from "./pages";
 import { ListSidebar } from "./features";
 
@@ -24,7 +24,7 @@ export default class App extends Component {
         <GlobalStyle />
         <Header />
         <Flex flexDirection="row" width={1}>
-          <Box flex={0.5} px={2}>
+          <Box flex={0.5}>
             <ListSidebar
               selectedList={selectedList}
               onSelectList={list =>

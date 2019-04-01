@@ -1,5 +1,5 @@
 import React from "react";
-import { OutlineButton, CloseButton, Text } from "pcln-design-system";
+import { OutlineButton } from "pcln-design-system";
 import { Query, Mutation } from "react-apollo";
 import { Box, Flex, QuickAdd } from "../../../components";
 import {
@@ -8,6 +8,7 @@ import {
   updateDeleteList,
   updateListsFetchMore
 } from "../graphql";
+import ListSidebarItem from "./Item";
 
 export const ListSidebar = ({ selectedList, onSelectList }) => {
   return (
@@ -30,13 +31,15 @@ export const ListSidebar = ({ selectedList, onSelectList }) => {
         }
 
         return (
-          <Flex flexDirection="column">
+          <Flex flexDirection="column" pl={2}>
             <Mutation
               mutation={Lists.mutations.create}
               update={updateCreateList}
             >
               {(createList, { data, loading, error }) => (
                 <QuickAdd
+                  mb={2}
+                  mr={2}
                   placeholder="Add List"
                   onSubmit={name =>
                     createList({
@@ -68,39 +71,12 @@ export const ListSidebar = ({ selectedList, onSelectList }) => {
               >
                 {deleteList =>
                   data.listLists.items.map(item => (
-                    <Flex key={item.id} flexDirection="row">
-                      <Box
-                        flex={1}
-                        bg={
-                          !!selectedList && item.id === selectedList.id
-                            ? "#fff6dd"
-                            : null
-                        }
-                      >
-                        <Text onClick={() => onSelectList(item)}>
-                          {item.name}
-                        </Text>
-                      </Box>
-                      <CloseButton
-                        onClick={() =>
-                          deleteList({
-                            optimisticResponse: {
-                              __typename: "Mutation",
-                              deleteList: {
-                                __typename: "List",
-                                ...item
-                              }
-                            },
-                            variables: {
-                              input: {
-                                id: item.id,
-                                expectedVersion: item.version
-                              }
-                            }
-                          })
-                        }
-                      />
-                    </Flex>
+                    <ListSidebarItem
+                      key={item.id}
+                      {...item}
+                      isSelected={!!selectedList && item.id === selectedList.id}
+                      onClick={() => onSelectList(item)}
+                    />
                   ))
                 }
               </Mutation>
