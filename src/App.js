@@ -19,7 +19,9 @@ export default class App extends Component {
           <Box flex={0.5} px={2}>
             <Lists
               selectedList={selectedList}
-              onSelectList={list => this.setState({ selectedList: list })}
+              onSelectList={list =>
+                this.setState({ selectedList: list, selectedTask: null })
+              }
             />
           </Box>
           <Box flex={1} px={2}>
