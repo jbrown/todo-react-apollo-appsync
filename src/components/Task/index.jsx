@@ -1,5 +1,5 @@
 import React from "react";
-import { Flex, OutlineButton, CloseButton, Truncate } from "pcln-design-system";
+import { Flex, OutlineButton, CloseButton, Text } from "pcln-design-system";
 import gql from "graphql-tag";
 import { Box, Comment } from "../index";
 
@@ -12,9 +12,16 @@ export const Task = ({
   onDelete,
   onSelect
 }) => (
-  <Flex flexDirection="row" mb={1} bg={isSelected ? "#fff6dd" : null}>
-    <Box flex={1}>
-      <Truncate onClick={onSelect}>{name}</Truncate>
+  <Flex
+    flexDirection="row"
+    alignItems="center"
+    mb={1}
+    p={2}
+    bg={isSelected ? "#fff6dd" : null}
+  >
+    <Box onClick={onSelect}>
+      <input type="checkbox" checked={isSelected} />
+      <Text>{name}</Text>
     </Box>
     <OutlineButton
       size="small"
