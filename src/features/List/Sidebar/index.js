@@ -24,7 +24,7 @@ export const ListSidebar = ({ selectedList, onSelectList }) => {
     >
       {({ data, loading, error, fetchMore }) => {
         if (error) {
-          return "Error!";
+          return `Error: ${error}`;
         }
 
         if (loading && !data.listLists) {

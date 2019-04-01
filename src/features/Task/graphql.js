@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 import { addToArray, removeFromArray } from "../../lib";
-import { ListPage } from "../../pages";
 import { CommentFragment } from "../Comment/graphql";
+import { ListFragment } from "../List/graphql";
 
 export const TaskFragment = gql`
   fragment TaskFields on Task {
@@ -11,6 +11,9 @@ export const TaskFragment = gql`
     createdAt
     updatedAt
     version
+    list {
+      id
+    }
     comments {
       items {
         ...CommentFields
@@ -52,33 +55,75 @@ export const Task = {
       mutation DeleteTask($input: DeleteTaskInput!) {
         deleteTask(input: $input) {
           id
+          list {
+            id
+          }
         }
       }
     `
   }
 };
 
-export const updateCreateTask = (
-  client,
-  { data: { createTask } },
-  variables
-) => {
-  let origList = client.readQuery({
-    query: ListPage.queries.list,
-    variables
-  });
-  let data = {
-    getList: {
-      ...origList.getList,
-      tasks: {
-        ...origList.getList.tasks,
-        items: addToArray(origList.getList.tasks.items, createTask)
+export const listTasks = gql`
+  query ListTasks(
+    $filter: ModelTaskFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listTasks(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        completed
+        createdAt
+        updatedAt
+        list {
+          id
+          name
+          createdAt
+          updatedAt
+          tasks {
+            nextToken
+          }
+          version
+        }
+        comments {
+          items {
+            id
+            content
+            createdAt
+            updatedAt
+            version
+          }
+          nextToken
+        }
+        version
       }
+      nextToken
+    }
+  }
+`;
+
+export const updateCreateTask = (client, { data: { createTask } }) => {
+  console.log("updateCreateTask", createTask);
+  let list = client.readFragment({
+    id: `List:${createTask.list.id}`,
+    fragment: ListFragment,
+    fragmentName: "ListFields"
+  });
+
+  let data = {
+    ...list,
+    tasks: {
+      ...list.tasks,
+      items: addToArray(list.tasks.items, createTask)
     }
   };
-  client.writeQuery({
-    query: ListPage.queries.list,
-    variables,
+  console.log("updated", data);
+  client.writeFragment({
+    id: `List:${createTask.list.id}`,
+    fragment: ListFragment,
+    fragmentName: "ListFields",
     data
   });
 };
@@ -101,27 +146,26 @@ export const updateUpdateTask = (client, { data: { updateTask } }) => {
   });
 };
 
-export const updateDeleteTask = (
-  client,
-  { data: { deleteTask } },
-  variables
-) => {
-  let origList = client.readQuery({
-    query: ListPage.queries.list,
-    variables
+export const updateDeleteTask = (client, { data: { deleteTask } }) => {
+  console.log("result", deleteTask);
+  let list = client.readFragment({
+    id: `List:${deleteTask.list.id}`,
+    fragment: ListFragment,
+    fragmentName: "ListFields"
   });
+
   let data = {
-    getList: {
-      ...origList.getList,
-      tasks: {
-        ...origList.getList.tasks,
-        items: removeFromArray(origList.getList.tasks.items, deleteTask)
-      }
+    ...list,
+    tasks: {
+      ...list.tasks,
+      items: removeFromArray(list.tasks.items, deleteTask)
     }
   };
-  client.writeQuery({
-    query: ListPage.queries.list,
-    variables,
+  console.log("updated", data);
+  client.writeFragment({
+    id: `List:${deleteTask.list.id}`,
+    fragment: ListFragment,
+    fragmentName: "ListFields",
     data
   });
 };

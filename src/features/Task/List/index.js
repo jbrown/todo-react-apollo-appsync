@@ -4,7 +4,7 @@ import TaskListItem from "./Item";
 export default ({
   tasks,
   updateTask,
-  deleteTask,
+  onDelete,
   onSelectTask,
   selectedTask
 }) => (
@@ -16,7 +16,7 @@ export default ({
         isSelected={selectedTask && item.id === selectedTask.id}
         onSelect={() => onSelectTask(item)}
         onUpdate={newProps => updateTask(item, newProps)}
-        onDelete={() => deleteTask(item.id, item.version)}
+        onDelete={() => onDelete(item)}
       />
     ))}
   </React.Fragment>

@@ -1,6 +1,32 @@
 import gql from "graphql-tag";
 import { addToArray, removeFromArray } from "../../lib";
-import { TaskFragment } from "../Task/graphql";
+
+const CommentFragment = gql`
+  fragment CommentFields on Comment {
+    id
+    content
+  }
+`;
+
+const TaskFragment = gql`
+  fragment TaskFields on Task {
+    id
+    name
+    completed
+    createdAt
+    updatedAt
+    version
+    list {
+      id
+    }
+    comments {
+      items {
+        ...CommentFields
+      }
+    }
+  }
+  ${CommentFragment}
+`;
 
 export const ListFragment = gql`
   fragment ListFields on List {
@@ -12,6 +38,36 @@ export const ListFragment = gql`
     tasks {
       items {
         ...TaskFields
+      }
+    }
+  }
+  ${TaskFragment}
+`;
+
+export const getListQuery = gql`
+  query getList(
+    $id: ID!
+    $filter: ModelTaskFilterInput
+    $sortDirection: ModelSortDirection
+    $limit: Int
+    $nextToken: String
+  ) {
+    getList(id: $id) {
+      id
+      name
+      createdAt
+      updatedAt
+      version
+      tasks(
+        filter: $filter
+        sortDirection: $sortDirection
+        limit: $limit
+        nextToken: $nextToken
+      ) {
+        items {
+          ...TaskFields
+        }
+        nextToken
       }
     }
   }
@@ -31,14 +87,6 @@ export const Lists = {
             ...ListFields
           }
           nextToken
-        }
-      }
-      ${ListFragment}
-    `,
-    list: gql`
-      query GetList($id: ID!) {
-        getList(id: $id) {
-          ...ListFields
         }
       }
       ${ListFragment}
