@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { createGlobalStyle } from "styled-components";
 import { Box, Flex, Header, Lists } from "./components";
 import { ListPage, TaskPage } from "./pages";
+import { ListSidebar } from "./features";
 
 const GlobalStyle = createGlobalStyle`
   html, body {
@@ -24,7 +25,7 @@ export default class App extends Component {
         <Header />
         <Flex flexDirection="row" width={1}>
           <Box flex={0.5} px={2}>
-            <Lists
+            <ListSidebar
               selectedList={selectedList}
               onSelectList={list =>
                 this.setState({ selectedList: list, selectedTask: null })

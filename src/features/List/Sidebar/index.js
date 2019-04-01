@@ -2,10 +2,10 @@ import React from "react";
 import { OutlineButton, CloseButton, Text } from "pcln-design-system";
 import gql from "graphql-tag";
 import { Query, Mutation } from "react-apollo";
-import { addToArray, removeFromArray } from "../../lib";
-import { List } from "../List";
-import { Box, Flex, QuickAdd } from "../index";
-
+import { addToArray, removeFromArray } from "../../../lib";
+import { List } from "../../../components/List";
+import { Box, Flex, QuickAdd } from "../../../components";
+let Lists = {};
 const updateCreateList = (client, { data: { createList } }) => {
   let origList = client.readQuery({ query: Lists.queries.listLists });
   let data = {
@@ -45,7 +45,7 @@ const updateListsFetchMore = (previousResult, { fetchMoreResult }) => {
   };
 };
 
-export const Lists = ({ selectedList, onSelectList }) => {
+export const ListSidebar = ({ selectedList, onSelectList }) => {
   return (
     <Query
       query={Lists.queries.listLists}
