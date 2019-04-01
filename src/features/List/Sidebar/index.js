@@ -32,7 +32,7 @@ export const ListSidebar = ({ selectedList, onSelectList }) => {
         }
 
         return (
-          <Flex flexDirection="column" pl={2}>
+          <Flex flexDirection="column">
             <Mutation
               mutation={Lists.mutations.create}
               update={updateCreateList}

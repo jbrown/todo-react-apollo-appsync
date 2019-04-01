@@ -23,7 +23,7 @@ export default class App extends Component {
       <Flex flexDirection="column">
         <GlobalStyle />
         <Header />
-        <Flex flexDirection="row" width={1}>
+        <Flex flexDirection="row" width={1} px={2}>
           <Box flex={0.5}>
             <ListSidebar
               selectedList={selectedList}
@@ -41,7 +41,7 @@ export default class App extends Component {
               />
             ) : null}
           </Box>
-          <Box flex={1} px={2} bg="#fff" borderRadius={6}>
+          <Box flex={1} ml={2} px={2} bg="#fff" borderRadius={6}>
             {selectedTask ? <TaskPage task={selectedTask} /> : null}
           </Box>
         </Flex>
