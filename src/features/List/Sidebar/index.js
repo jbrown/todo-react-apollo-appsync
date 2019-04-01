@@ -1,49 +1,13 @@
 import React from "react";
 import { OutlineButton, CloseButton, Text } from "pcln-design-system";
-import gql from "graphql-tag";
 import { Query, Mutation } from "react-apollo";
-import { addToArray, removeFromArray } from "../../../lib";
-import { List } from "../../../components/List";
 import { Box, Flex, QuickAdd } from "../../../components";
-let Lists = {};
-const updateCreateList = (client, { data: { createList } }) => {
-  let origList = client.readQuery({ query: Lists.queries.listLists });
-  let data = {
-    listLists: {
-      ...origList.listLists,
-      items: addToArray(origList.listLists.items, createList)
-    }
-  };
-  client.writeQuery({ query: Lists.queries.listLists, data });
-};
-
-const updateDeleteList = (client, { data: { deleteList } }) => {
-  let origList = client.readQuery({ query: Lists.queries.listLists });
-  let data = {
-    listLists: {
-      ...origList.listLists,
-      items: removeFromArray(origList.listLists.items, deleteList)
-    }
-  };
-  client.writeQuery({ query: Lists.queries.listLists, data });
-};
-
-const updateListsFetchMore = (previousResult, { fetchMoreResult }) => {
-  let {
-    listLists: { __typename, items: oldItems }
-  } = previousResult;
-  let {
-    listLists: { items: newItems, nextToken }
-  } = fetchMoreResult;
-
-  return {
-    listLists: {
-      __typename,
-      items: [...oldItems, ...newItems],
-      nextToken
-    }
-  };
-};
+import {
+  Lists,
+  updateCreateList,
+  updateDeleteList,
+  updateListsFetchMore
+} from "../graphql";
 
 export const ListSidebar = ({ selectedList, onSelectList }) => {
   return (
@@ -160,41 +124,4 @@ export const ListSidebar = ({ selectedList, onSelectList }) => {
       }}
     </Query>
   );
-};
-
-Lists.queries = {
-  listLists: gql`
-    query ListLists(
-      $filter: ModelListFilterInput
-      $limit: Int
-      $nextToken: String
-    ) {
-      listLists(filter: $filter, limit: $limit, nextToken: $nextToken) {
-        items {
-          ...ListFields
-        }
-        nextToken
-      }
-    }
-    ${List.fragments.list}
-  `
-};
-
-Lists.mutations = {
-  create: gql`
-    mutation CreateList($input: CreateListInput!) {
-      createList(input: $input) {
-        ...ListFields
-      }
-    }
-    ${List.fragments.list}
-  `,
-  delete: gql`
-    mutation DeleteList($input: DeleteListInput!) {
-      deleteList(input: $input) {
-        ...ListFields
-      }
-    }
-    ${List.fragments.list}
-  `
 };
