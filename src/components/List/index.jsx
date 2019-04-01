@@ -1,7 +1,6 @@
 import React from "react";
-import { Flex } from "pcln-design-system";
 import gql from "graphql-tag";
-import { Box, QuickAdd } from "../index";
+import { Box, Flex, QuickAdd } from "../index";
 import { Task } from "../Task";
 
 export const List = ({

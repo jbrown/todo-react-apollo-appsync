@@ -1,7 +1,13 @@
 import React, { Component } from "react";
-import { Flex } from "pcln-design-system";
-import { Box, Header, Lists } from "./components";
+import { createGlobalStyle } from "styled-components";
+import { Box, Flex, Header, Lists } from "./components";
 import { ListPage, TaskPage } from "./pages";
+
+const GlobalStyle = createGlobalStyle`
+  html, body {
+    background-color: #eee;
+  }
+`;
 
 export default class App extends Component {
   state = {
@@ -14,6 +20,7 @@ export default class App extends Component {
 
     return (
       <Flex flexDirection="column">
+        <GlobalStyle />
         <Header />
         <Flex flexDirection="row" width={1}>
           <Box flex={0.5} px={2}>
@@ -24,7 +31,7 @@ export default class App extends Component {
               }
             />
           </Box>
-          <Box flex={1} px={2}>
+          <Box flex={1} p={2} bg="#fff" borderRadius={6}>
             {selectedList ? (
               <ListPage
                 list={selectedList}
@@ -33,7 +40,7 @@ export default class App extends Component {
               />
             ) : null}
           </Box>
-          <Box flex={1} px={2}>
+          <Box flex={1} px={2} bg="#fff" borderRadius={6}>
             {selectedTask ? <TaskPage task={selectedTask} /> : null}
           </Box>
         </Flex>

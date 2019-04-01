@@ -1,8 +1,8 @@
 import React from "react";
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
-import { Card, Flex } from "pcln-design-system";
-import { Box, Comment, QuickAdd, Task } from "../../components";
+import { Card } from "pcln-design-system";
+import { Box, Comment, Flex, QuickAdd, Task } from "../../components";
 import { addToArray } from "../../lib";
 
 const updateCreateComment = (client, { data: { createComment } }, taskId) => {

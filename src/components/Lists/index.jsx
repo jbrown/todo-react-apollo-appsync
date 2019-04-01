@@ -1,10 +1,10 @@
 import React from "react";
-import { OutlineButton, CloseButton, Flex, Text } from "pcln-design-system";
+import { OutlineButton, CloseButton, Text } from "pcln-design-system";
 import gql from "graphql-tag";
 import { Query, Mutation } from "react-apollo";
 import { addToArray, removeFromArray } from "../../lib";
 import { List } from "../List";
-import { Box, QuickAdd } from "../index";
+import { Box, Flex, QuickAdd } from "../index";
 
 const updateCreateList = (client, { data: { createList } }) => {
   let origList = client.readQuery({ query: Lists.queries.listLists });

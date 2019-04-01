@@ -1,7 +1,7 @@
 import React from "react";
-import { Flex, OutlineButton, CloseButton, Text } from "pcln-design-system";
+import { OutlineButton, CloseButton, Text } from "pcln-design-system";
 import gql from "graphql-tag";
-import { Box, Comment } from "../index";
+import { Box, Comment, Flex } from "../index";
 
 export const Task = ({
   completed,
