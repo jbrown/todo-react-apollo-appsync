@@ -15,6 +15,7 @@ export const ListSidebar = ({ selectedList, onSelectList }) => {
     <Query
       query={Lists.queries.listLists}
       fetchPolicy="cache-and-network"
+      variables={{ limit: 100 }}
       onCompleted={data => {
         if (!selectedList && data.listLists.items.length > 0) {
           onSelectList(data.listLists.items[0]);
