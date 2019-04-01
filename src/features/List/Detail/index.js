@@ -3,7 +3,7 @@ import { Query } from "react-apollo";
 import { ToggleBadge } from "pcln-design-system";
 import { Box, Flex, QuickAdd } from "../../../components";
 import TaskList from "../../Task/List";
-import { getListQuery } from "../graphql";
+import { listDetailQuery } from "../graphql";
 
 export const ListDetail = ({
   onCreate,
@@ -34,7 +34,7 @@ export const ListDetail = ({
       <QuickAdd placeholder="Add Task" onSubmit={onCreate} />
       <Box>
         <Query
-          query={getListQuery}
+          query={listDetailQuery}
           variables={{
             id: list.id,
             filter: { completed: { eq: !viewingIncomplete } },

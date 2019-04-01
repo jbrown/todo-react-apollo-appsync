@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 import { addToArray, removeFromArray } from "../../lib";
-import { ListFragment } from "../List/graphql";
+import { ListFragment, listDetailQuery } from "../List/graphql";
 
 export const CommentFragment = gql`
   fragment CommentFields on Comment {
@@ -111,26 +111,48 @@ export const listTasks = gql`
 `;
 
 export const updateCreateTask = (client, { data: { createTask } }) => {
-  console.log("updateCreateTask", createTask);
+  let detail = client.readQuery({
+    query: listDetailQuery,
+    variables: {
+      id: createTask.list.id,
+      filter: { completed: { eq: false } },
+      limit: 30
+    }
+  });
+  client.writeQuery({
+    query: listDetailQuery,
+    variables: {
+      id: createTask.list.id,
+      filter: { completed: { eq: false } },
+      limit: 30
+    },
+    data: {
+      getList: {
+        ...detail.getList,
+        tasks: {
+          ...detail.getList.tasks,
+          items: addToArray(detail.getList.tasks.items, createTask)
+        }
+      }
+    }
+  });
+
   let list = client.readFragment({
     id: `List:${createTask.list.id}`,
     fragment: ListFragment,
     fragmentName: "ListFields"
   });
-
-  let data = {
-    ...list,
-    tasks: {
-      ...list.tasks,
-      items: addToArray(list.tasks.items, createTask)
-    }
-  };
-  console.log("updated", data);
   client.writeFragment({
     id: `List:${createTask.list.id}`,
     fragment: ListFragment,
     fragmentName: "ListFields",
-    data
+    data: {
+      ...list,
+      tasks: {
+        ...list.tasks,
+        items: addToArray(list.tasks.items, createTask)
+      }
+    }
   });
 };
 

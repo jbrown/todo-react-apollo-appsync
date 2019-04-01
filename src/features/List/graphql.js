@@ -44,7 +44,7 @@ export const ListFragment = gql`
   ${TaskFragment}
 `;
 
-export const getListQuery = gql`
+export const listDetailQuery = gql`
   query getList(
     $id: ID!
     $filter: ModelTaskFilterInput
