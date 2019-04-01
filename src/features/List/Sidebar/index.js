@@ -4,6 +4,7 @@ import { Query, Mutation } from "react-apollo";
 import { Box, Flex, QuickAdd } from "../../../components";
 import {
   Lists,
+  sidebarQuery,
   updateCreateList,
   updateDeleteList,
   updateListsFetchMore
@@ -13,7 +14,7 @@ import ListSidebarItem from "./Item";
 export const ListSidebar = ({ selectedList, onSelectList }) => {
   return (
     <Query
-      query={Lists.queries.listLists}
+      query={sidebarQuery}
       fetchPolicy="cache-and-network"
       variables={{ limit: 100 }}
       onCompleted={data => {

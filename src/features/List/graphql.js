@@ -74,6 +74,29 @@ export const getListQuery = gql`
   ${TaskFragment}
 `;
 
+export const sidebarQuery = gql`
+  query ListLists(
+    $filter: ModelListFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listLists(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        version
+        tasks(filter: { completed: { eq: false } }, limit: 50) {
+          items {
+            id
+          }
+          nextToken
+        }
+      }
+      nextToken
+    }
+  }
+`;
+
 export const Lists = {
   queries: {
     listLists: gql`
