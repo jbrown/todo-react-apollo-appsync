@@ -31,7 +31,10 @@ export const ListDetail = ({
           Completed
         </ToggleBadge>
       </Flex>
-      <QuickAdd placeholder="Add Task" onSubmit={onCreate} />
+      {viewingIncomplete ? (
+        <QuickAdd placeholder="Add Task" onSubmit={onCreate} />
+      ) : null}
+
       <Box>
         <Query
           query={listDetailQuery}
