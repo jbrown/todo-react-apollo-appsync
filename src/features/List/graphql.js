@@ -1,6 +1,22 @@
 import gql from "graphql-tag";
 import { addToArray, removeFromArray } from "../../lib";
-import { List } from "../../components";
+import { TaskFragment } from "../Task/graphql";
+
+export const ListFragment = gql`
+  fragment ListFields on List {
+    id
+    name
+    createdAt
+    updatedAt
+    version
+    tasks {
+      items {
+        ...TaskFields
+      }
+    }
+  }
+  ${TaskFragment}
+`;
 
 export const Lists = {
   queries: {
@@ -17,7 +33,15 @@ export const Lists = {
           nextToken
         }
       }
-      ${List.fragments.list}
+      ${ListFragment}
+    `,
+    list: gql`
+      query GetList($id: ID!) {
+        getList(id: $id) {
+          ...ListFields
+        }
+      }
+      ${ListFragment}
     `
   },
 
@@ -28,7 +52,7 @@ export const Lists = {
           ...ListFields
         }
       }
-      ${List.fragments.list}
+      ${ListFragment}
     `,
     delete: gql`
       mutation DeleteList($input: DeleteListInput!) {
@@ -36,7 +60,7 @@ export const Lists = {
           ...ListFields
         }
       }
-      ${List.fragments.list}
+      ${ListFragment}
     `
   }
 };

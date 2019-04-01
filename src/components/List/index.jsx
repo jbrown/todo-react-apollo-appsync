@@ -1,5 +1,4 @@
 import React from "react";
-import gql from "graphql-tag";
 import { Box, Flex, QuickAdd } from "../index";
 import { Task } from "../Task";
 
@@ -27,21 +26,3 @@ export const List = ({
     </Box>
   </Flex>
 );
-
-List.fragments = {
-  list: gql`
-    fragment ListFields on List {
-      id
-      name
-      createdAt
-      updatedAt
-      version
-      tasks {
-        items {
-          ...TaskFields
-        }
-      }
-    }
-    ${Task.fragments.task}
-  `
-};

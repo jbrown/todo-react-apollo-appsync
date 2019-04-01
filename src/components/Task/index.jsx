@@ -1,7 +1,6 @@
 import React from "react";
 import { OutlineButton, CloseButton, Text } from "pcln-design-system";
-import gql from "graphql-tag";
-import { Box, Comment, Flex } from "../index";
+import { Box, Flex } from "../index";
 
 export const Task = ({
   completed,
@@ -32,22 +31,3 @@ export const Task = ({
     <CloseButton onClick={onDelete}>delete</CloseButton>
   </Flex>
 );
-
-Task.fragments = {
-  task: gql`
-    fragment TaskFields on Task {
-      id
-      name
-      completed
-      createdAt
-      updatedAt
-      version
-      comments {
-        items {
-          ...CommentFields
-        }
-      }
-    }
-    ${Comment.fragments.comment}
-  `
-};
