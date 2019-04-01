@@ -1,21 +1,15 @@
 import React from "react";
 import { Mutation } from "react-apollo";
-import { Card } from "pcln-design-system";
-import { Box, Comment as CommentItem, Flex, QuickAdd } from "../../components";
+import { Box, Flex, QuickAdd } from "../../components";
 import { updateCreateComment } from "../../features/Comment/graphql";
 import { Comment } from "../../features/Comment/graphql";
+import CommentList from "../../features/Comment/List";
 
 export const TaskPage = ({ task }) => (
   <Flex flexDirection="column">
     <Box mb={2}>{task.name}</Box>
     <Box mb={2}>Comments ({task.comments.items.length})</Box>
-    <Box>
-      {task.comments.items.map(item => (
-        <Card key={item.id} p={2} mb={2} borderRadius={4}>
-          <CommentItem {...item} />
-        </Card>
-      ))}
-    </Box>
+    <CommentList comments={task.comments.items} />
     <Mutation
       mutation={Comment.mutations.createComment}
       update={(client, mutationResult) =>
