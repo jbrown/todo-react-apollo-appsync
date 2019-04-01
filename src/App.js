@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { compose, graphql } from "react-apollo";
 import { createGlobalStyle } from "styled-components";
 import { Box, Flex, Header } from "./components";
-import { ListDetail, ListSidebar } from "./features";
+import { ListDetail, ListSidebar, TaskDetail } from "./features";
 import {
   Task,
   updateCreateTask,
@@ -46,6 +46,11 @@ class App extends Component {
                 onCreate={name => this.props.createTask(selectedList.id, name)}
                 onDelete={this.props.deleteTask}
               />
+            ) : null}
+          </Box>
+          <Box flex={1} ml={2} px={2} bg="#fff" borderRadius={6}>
+            {selectedTask ? (
+              <TaskDetail task={selectedTask} onDelete={this.deleteTask} />
             ) : null}
           </Box>
         </Flex>

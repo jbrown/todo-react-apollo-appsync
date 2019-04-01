@@ -1,7 +1,13 @@
 import gql from "graphql-tag";
 import { addToArray, removeFromArray } from "../../lib";
-import { CommentFragment } from "../Comment/graphql";
 import { ListFragment } from "../List/graphql";
+
+export const CommentFragment = gql`
+  fragment CommentFields on Comment {
+    id
+    content
+  }
+`;
 
 export const TaskFragment = gql`
   fragment TaskFields on Task {

@@ -1,11 +1,11 @@
 import React from "react";
 import { Mutation } from "react-apollo";
-import { Box, Flex, QuickAdd } from "../../components";
-import { updateCreateComment } from "../../features/Comment/graphql";
-import { Comment } from "../../features/Comment/graphql";
-import CommentList from "../../features/Comment/List";
+import { Box, Flex, QuickAdd } from "../../../components";
+import { updateCreateComment } from "../../Comment/graphql";
+import { Comment } from "../../Comment/graphql";
+import CommentList from "../../Comment/List";
 
-export const TaskPage = ({ task }) => (
+export const TaskDetail = ({ task }) => (
   <Flex flexDirection="column">
     <Box mb={2}>{task.name}</Box>
     <Box mb={2}>Comments ({task.comments.items.length})</Box>
