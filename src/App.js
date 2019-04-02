@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { compose, graphql } from "react-apollo";
 import { createGlobalStyle } from "styled-components";
 import { Box, Flex, Header } from "./components";
@@ -15,49 +15,44 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-class App extends Component {
-  state = {
-    selectedList: null,
-    selectedTask: null
-  };
+const App = ({ createTask, deleteTask }) => {
+  let [selectedList, setSelectedList] = useState(null);
+  let [selectedTask, setSelectedTask] = useState(null);
 
-  render() {
-    let { selectedList, selectedTask } = this.state;
-
-    return (
-      <Flex flexDirection="column">
-        <GlobalStyle />
-        <Header />
-        <Flex flexDirection="row" width={1} px={2}>
-          <Box flex={0.5}>
-            <ListSidebar
-              selectedList={selectedList}
-              onSelectList={list =>
-                this.setState({ selectedList: list, selectedTask: null })
-              }
+  return (
+    <Flex flexDirection="column">
+      <GlobalStyle />
+      <Header />
+      <Flex flexDirection="row" width={1} px={2}>
+        <Box flex={0.5}>
+          <ListSidebar
+            selectedList={selectedList}
+            onSelectList={list => {
+              setSelectedList(list);
+              setSelectedTask(null);
+            }}
+          />
+        </Box>
+        <Box flex={1} bg="#fff" borderRadius={6}>
+          {selectedList ? (
+            <ListDetail
+              list={selectedList}
+              selectedTask={selectedTask}
+              onSelectTask={task => setSelectedTask(task)}
+              onCreate={name => createTask(selectedList.id, name)}
+              onDelete={deleteTask}
             />
-          </Box>
-          <Box flex={1} bg="#fff" borderRadius={6}>
-            {selectedList ? (
-              <ListDetail
-                list={selectedList}
-                selectedTask={selectedTask}
-                onSelectTask={task => this.setState({ selectedTask: task })}
-                onCreate={name => this.props.createTask(selectedList.id, name)}
-                onDelete={this.props.deleteTask}
-              />
-            ) : null}
-          </Box>
-          <Box flex={1} ml={2} px={2} bg="#fff" borderRadius={6}>
-            {selectedTask ? (
-              <TaskDetail taskId={selectedTask.id} onDelete={this.deleteTask} />
-            ) : null}
-          </Box>
-        </Flex>
+          ) : null}
+        </Box>
+        <Box flex={1} ml={2} px={2} bg="#fff" borderRadius={6}>
+          {selectedTask ? (
+            <TaskDetail taskId={selectedTask.id} onDelete={deleteTask} />
+          ) : null}
+        </Box>
       </Flex>
-    );
-  }
-}
+    </Flex>
+  );
+};
 
 export default compose(
   graphql(Task.mutations.createTask, {
