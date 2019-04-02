@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
-import { ToggleBadge } from "pcln-design-system";
+import { Text, ToggleBadge } from "pcln-design-system";
 import { Box, Flex, QuickAdd } from "../../../components";
 import { TaskList } from "../../Task/List";
 import { listDetailQuery } from "../graphql";
@@ -53,15 +53,24 @@ export const ListDetail = ({
             if (loading && !getList) {
               return "Loading...";
             }
+
+            if (getList.tasks.items.length === 0) {
+              return (
+                <Flex flexDirection="column" mt={6}>
+                  <Text mx="auto" color="gray">
+                    No {viewingIncomplete ? "incomplete" : "completed"} tasks
+                  </Text>
+                </Flex>
+              );
+            }
+
             return (
-              <React.Fragment>
-                <TaskList
-                  tasks={getList.tasks.items}
-                  onSelectTask={onSelectTask}
-                  selectedTask={selectedTask}
-                  onDelete={onDelete}
-                />
-              </React.Fragment>
+              <TaskList
+                tasks={getList.tasks.items}
+                onSelectTask={onSelectTask}
+                selectedTask={selectedTask}
+                onDelete={onDelete}
+              />
             );
           }}
         </Query>
