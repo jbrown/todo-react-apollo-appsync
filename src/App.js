@@ -37,7 +37,7 @@ class App extends Component {
               }
             />
           </Box>
-          <Box flex={1} p={2} bg="#fff" borderRadius={6}>
+          <Box flex={1} bg="#fff" borderRadius={6}>
             {selectedList ? (
               <ListDetail
                 list={selectedList}

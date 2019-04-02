@@ -1,15 +1,15 @@
 import React from "react";
 import gql from "graphql-tag";
+import styled from "styled-components";
 import { Icon, Text } from "pcln-design-system";
 import { Flex } from "../../../../components";
 
 export const TaskListItem = ({ completed, id, name, isSelected, onSelect }) => (
-  <Flex
+  <TaskListItemWrapper
     flexDirection="row"
     alignItems="center"
-    mb={1}
-    p={2}
     bg={isSelected ? "#fff6dd" : null}
+    p={1}
     onClick={onSelect}
   >
     <Icon
@@ -18,7 +18,7 @@ export const TaskListItem = ({ completed, id, name, isSelected, onSelect }) => (
       color="blue"
     />
     <Text ml={2}>{name}</Text>
-  </Flex>
+  </TaskListItemWrapper>
 );
 
 TaskListItem.fragment = gql`
@@ -39,4 +39,9 @@ TaskListItem.fragment = gql`
       }
     }
   }
+`;
+
+const TaskListItemWrapper = styled(Flex)`
+  border-bottom: 1px solid ${props => props.theme.colors.borderGray};
+  cursor: pointer;
 `;

@@ -18,7 +18,7 @@ export const ListDetail = ({
 
   return (
     <Flex flexDirection="column">
-      <Flex flexDirection="row">
+      <Flex flexDirection="row" p={1}>
         <ToggleBadge
           selected={viewingIncomplete}
           onClick={() => setViewingIncomplete(true)}
@@ -33,7 +33,7 @@ export const ListDetail = ({
         </ToggleBadge>
       </Flex>
       {viewingIncomplete ? (
-        <QuickAdd placeholder="Add Task" onSubmit={onCreate} />
+        <QuickAdd placeholder="Add Task" onSubmit={onCreate} px={2} />
       ) : null}
 
       <Box>
