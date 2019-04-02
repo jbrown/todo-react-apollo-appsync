@@ -1,5 +1,5 @@
-import React from "react";
-import { OutlineButton } from "pcln-design-system";
+import React, { useState } from "react";
+import { IconButton, OutlineButton } from "pcln-design-system";
 import { Query, Mutation } from "react-apollo";
 import { Box, Flex, QuickAdd } from "../../../components";
 import {
@@ -11,6 +11,8 @@ import {
 import ListSidebarItem from "./Item";
 
 export const ListSidebar = ({ selectedList, onSelectList }) => {
+  let [isShowingCreateForm, setIsShowingCreateForm] = useState(false);
+
   return (
     <Query
       query={sidebarQuery}
@@ -33,38 +35,49 @@ export const ListSidebar = ({ selectedList, onSelectList }) => {
 
         return (
           <Flex flexDirection="column">
-            <Mutation
-              mutation={Lists.mutations.create}
-              update={updateCreateList}
-            >
-              {(createList, { data, loading, error }) => (
-                <QuickAdd
-                  mb={2}
-                  mr={2}
-                  placeholder="Add List"
-                  onSubmit={name =>
-                    createList({
-                      optimisticResponse: {
-                        __typename: "Mutation",
-                        createList: {
-                          __typename: "List",
-                          name,
-                          id: "-1",
-                          version: 1,
-                          createdAt: "",
-                          updatedAt: "",
-                          tasks: {
-                            __typename: "ModelTaskConnection",
-                            items: []
+            <Flex flexDirection="row" m={2}>
+              <Box flex={1}>Lists ({data.listLists.items.length})</Box>
+              <IconButton
+                name={isShowingCreateForm ? "BoxMinus" : "BoxPlus"}
+                size={24}
+                color="black"
+                onClick={() => setIsShowingCreateForm(!isShowingCreateForm)}
+              />
+            </Flex>
+            {isShowingCreateForm ? (
+              <Mutation
+                mutation={Lists.mutations.create}
+                update={updateCreateList}
+              >
+                {(createList, { data, loading, error }) => (
+                  <QuickAdd
+                    mb={2}
+                    mr={2}
+                    placeholder="Add List"
+                    onSubmit={name =>
+                      createList({
+                        optimisticResponse: {
+                          __typename: "Mutation",
+                          createList: {
+                            __typename: "List",
+                            name,
+                            id: "-1",
+                            version: 1,
+                            createdAt: "",
+                            updatedAt: "",
+                            tasks: {
+                              __typename: "ModelTaskConnection",
+                              items: []
+                            }
                           }
-                        }
-                      },
-                      variables: { input: { name } }
-                    })
-                  }
-                />
-              )}
-            </Mutation>
+                        },
+                        variables: { input: { name } }
+                      })
+                    }
+                  />
+                )}
+              </Mutation>
+            ) : null}
             <Box>
               {data.listLists.items.map(item => (
                 <ListSidebarItem
