@@ -6,16 +6,16 @@ export const TaskList = ({
   tasks,
   updateTask,
   onDelete,
-  onSelectTask,
-  selectedTask
+  onToggleSelectTask,
+  selectedTasks
 }) => (
   <React.Fragment>
     {tasks.map(item => (
       <TaskListItem
         key={item.id}
         {...item}
-        isSelected={selectedTask && item.id === selectedTask.id}
-        onSelect={() => onSelectTask(item)}
+        isSelected={selectedTasks.some(i => item.id === i.id)}
+        onClick={() => onToggleSelectTask(item)}
         onUpdate={newProps => updateTask(item, newProps)}
         onDelete={() => onDelete(item)}
       />

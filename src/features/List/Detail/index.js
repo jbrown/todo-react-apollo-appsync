@@ -11,8 +11,8 @@ export const ListDetail = ({
   onDelete,
   onUpdate,
   list,
-  selectedTask,
-  onSelectTask
+  selectedTasks,
+  onToggleSelectTask
 }) => {
   const [viewingIncomplete, setViewingIncomplete] = useState(true);
 
@@ -67,8 +67,8 @@ export const ListDetail = ({
             return (
               <TaskList
                 tasks={getList.tasks.items}
-                onSelectTask={onSelectTask}
-                selectedTask={selectedTask}
+                onToggleSelectTask={onToggleSelectTask}
+                selectedTasks={selectedTasks}
                 onDelete={onDelete}
               />
             );

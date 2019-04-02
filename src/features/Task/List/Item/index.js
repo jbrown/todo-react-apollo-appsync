@@ -4,13 +4,13 @@ import styled from "styled-components";
 import { Icon, Text } from "pcln-design-system";
 import { Flex } from "../../../../components";
 
-export const TaskListItem = ({ completed, id, name, isSelected, onSelect }) => (
+export const TaskListItem = ({ completed, id, name, isSelected, onClick }) => (
   <TaskListItemWrapper
     flexDirection="row"
     alignItems="center"
     bg={isSelected ? "#fff6dd" : null}
     p={1}
-    onClick={onSelect}
+    onClick={onClick}
   >
     <Icon
       name={isSelected ? "BoxChecked" : "BoxEmpty"}

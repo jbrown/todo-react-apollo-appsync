@@ -8,6 +8,7 @@ import {
   updateCreateTask,
   updateDeleteTask
 } from "./features/Task/graphql";
+import { addToArray, removeFromArray } from "./lib";
 
 const GlobalStyle = createGlobalStyle`
   html, body {
@@ -17,7 +18,7 @@ const GlobalStyle = createGlobalStyle`
 
 const App = ({ createTask, deleteTask }) => {
   let [selectedList, setSelectedList] = useState(null);
-  let [selectedTask, setSelectedTask] = useState(null);
+  let [selectedTasks, setSelectedTasks] = useState([]);
 
   return (
     <Flex flexDirection="column">
@@ -29,7 +30,7 @@ const App = ({ createTask, deleteTask }) => {
             selectedList={selectedList}
             onSelectList={list => {
               setSelectedList(list);
-              setSelectedTask(null);
+              setSelectedTasks([]);
             }}
           />
         </Box>
@@ -37,16 +38,26 @@ const App = ({ createTask, deleteTask }) => {
           {selectedList ? (
             <ListDetail
               list={selectedList}
-              selectedTask={selectedTask}
-              onSelectTask={task => setSelectedTask(task)}
+              selectedTasks={selectedTasks}
+              onToggleSelectTask={task => {
+                let alreadySelected = selectedTasks.some(
+                  item => item.id === task.id
+                );
+
+                setSelectedTasks(
+                  alreadySelected
+                    ? removeFromArray(selectedTasks, task)
+                    : addToArray(selectedTasks, task)
+                );
+              }}
               onCreate={name => createTask(selectedList.id, name)}
               onDelete={deleteTask}
             />
           ) : null}
         </Box>
         <Box flex={1} ml={2} px={2} bg="#fff" borderRadius={6}>
-          {selectedTask ? (
-            <TaskDetail taskId={selectedTask.id} onDelete={deleteTask} />
+          {selectedTasks.length === 1 ? (
+            <TaskDetail taskId={selectedTasks[0].id} onDelete={deleteTask} />
           ) : null}
         </Box>
       </Flex>
