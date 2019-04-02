@@ -6,7 +6,6 @@ import {
   Lists,
   sidebarQuery,
   updateCreateList,
-  updateDeleteList,
   updateListsFetchMore
 } from "../graphql";
 import ListSidebarItem from "./Item";
@@ -67,21 +66,14 @@ export const ListSidebar = ({ selectedList, onSelectList }) => {
               )}
             </Mutation>
             <Box>
-              <Mutation
-                mutation={Lists.mutations.delete}
-                update={updateDeleteList}
-              >
-                {deleteList =>
-                  data.listLists.items.map(item => (
-                    <ListSidebarItem
-                      key={item.id}
-                      {...item}
-                      isSelected={!!selectedList && item.id === selectedList.id}
-                      onClick={() => onSelectList(item)}
-                    />
-                  ))
-                }
-              </Mutation>
+              {data.listLists.items.map(item => (
+                <ListSidebarItem
+                  key={item.id}
+                  {...item}
+                  isSelected={!!selectedList && item.id === selectedList.id}
+                  onClick={() => onSelectList(item)}
+                />
+              ))}
               {data.listLists.nextToken ? (
                 <OutlineButton
                   size="small"
