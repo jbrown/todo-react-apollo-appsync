@@ -1,6 +1,7 @@
 import gql from "graphql-tag";
 import { addToArray, removeFromArray } from "../../lib";
 import { ListFragment, listDetailQuery } from "../List/graphql";
+import { ListDetail } from "../List";
 
 export const CommentFragment = gql`
   fragment CommentFields on Comment {
@@ -137,17 +138,17 @@ export const updateCreateTask = (client, { data: { createTask } }) => {
   let detail = client.readQuery({
     query: listDetailQuery,
     variables: {
+      ...ListDetail.listDetailQueryDefaultVariables,
       id: createTask.list.id,
-      filter: { completed: { eq: false } },
-      limit: 30
+      filter: { completed: { eq: false } }
     }
   });
   client.writeQuery({
     query: listDetailQuery,
     variables: {
+      ...ListDetail.listDetailQueryDefaultVariables,
       id: createTask.list.id,
-      filter: { completed: { eq: false } },
-      limit: 30
+      filter: { completed: { eq: false } }
     },
     data: {
       getList: {

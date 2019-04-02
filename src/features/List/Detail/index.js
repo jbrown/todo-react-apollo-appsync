@@ -40,9 +40,9 @@ export const ListDetail = ({
         <Query
           query={listDetailQuery}
           variables={{
+            ...ListDetail.listDetailQueryDefaultVariables,
             id: list.id,
-            filter: { completed: { eq: !viewingIncomplete } },
-            limit: 30
+            filter: { completed: { eq: !viewingIncomplete } }
           }}
         >
           {({ data: { getList }, loading, error }) => {
@@ -97,3 +97,7 @@ ListDetail.listFragment = gql`
   }
   ${TaskList.fragment}
 `;
+
+ListDetail.listDetailQueryDefaultVariables = {
+  limit: 30
+};
