@@ -8,6 +8,7 @@ import { listDetailQuery } from "../graphql";
 
 export const ListDetail = ({
   onCreate,
+  onCompleteSelected,
   onDeleteSelected,
   onUpdate,
   list,
@@ -35,6 +36,7 @@ export const ListDetail = ({
       {viewingIncomplete ? (
         <React.Fragment>
           <Flex flexDirection="row" justifyContent="flex-end" px={1} mb={2}>
+            <IconButton name="Check" onClick={onCompleteSelected} />
             <IconButton name="Close" onClick={onDeleteSelected} />
           </Flex>
           <QuickAdd placeholder="Add Task" onSubmit={onCreate} px={2} />

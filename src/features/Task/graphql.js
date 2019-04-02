@@ -134,94 +134,60 @@ export const listTasks = gql`
   }
 `;
 
-export const updateCreateTask = (client, { data: { createTask } }) => {
+const updateListDetailQuery = (client, filterVariable, task, arrayFunc) => {
   let detail = client.readQuery({
     query: listDetailQuery,
     variables: {
       ...ListDetail.listDetailQueryDefaultVariables,
-      id: createTask.list.id,
-      filter: { completed: { eq: false } }
+      id: task.list.id,
+      filter: filterVariable
     }
   });
   client.writeQuery({
     query: listDetailQuery,
     variables: {
       ...ListDetail.listDetailQueryDefaultVariables,
-      id: createTask.list.id,
-      filter: { completed: { eq: false } }
+      id: task.list.id,
+      filter: filterVariable
     },
     data: {
       getList: {
         ...detail.getList,
         tasks: {
           ...detail.getList.tasks,
-          items: addToArray(detail.getList.tasks.items, createTask)
+          items: arrayFunc(detail.getList.tasks.items, task)
         }
       }
     }
   });
+};
 
-  let list = client.readFragment({
-    id: `List:${createTask.list.id}`,
-    fragment: ListFragment,
-    fragmentName: "ListFields"
-  });
-  client.writeFragment({
-    id: `List:${createTask.list.id}`,
-    fragment: ListFragment,
-    fragmentName: "ListFields",
-    data: {
-      ...list,
-      tasks: {
-        ...list.tasks,
-        items: addToArray(list.tasks.items, createTask)
-      }
-    }
-  });
+const updateIncompleteQuery = (client, task, arrayFunc) => {
+  updateListDetailQuery(client, { completed: { eq: false } }, task, arrayFunc);
+};
+
+const updateCompletedQuery = (client, task, arrayFunc) => {
+  updateListDetailQuery(client, { completed: { eq: true } }, task, arrayFunc);
+};
+
+export const updateCreateTask = (client, { data: { createTask } }) => {
+  updateIncompleteQuery(client, createTask, addToArray);
 };
 
 export const updateUpdateTask = (client, { data: { updateTask } }) => {
-  let task = client.readFragment({
-    id: `Task:${updateTask.id}`,
-    fragment: TaskFragment,
-    fragmentName: "TaskFields"
-  });
-  let data = {
-    ...task,
-    ...updateTask
-  };
-  client.writeFragment({
-    id: `Task:${updateTask.id}`,
-    fragment: TaskFragment,
-    fragmentName: "TaskFields",
-    data
-  });
+  updateIncompleteQuery(
+    client,
+    updateTask,
+    updateTask.completed ? removeFromArray : addToArray
+  );
+  updateCompletedQuery(
+    client,
+    updateTask,
+    updateTask.completed ? addToArray : removeFromArray
+  );
 };
 
 export const updateDeleteTask = (client, { data: { deleteTask } }) => {
-  let detail = client.readQuery({
-    query: listDetailQuery,
-    variables: {
-      ...ListDetail.listDetailQueryDefaultVariables,
-      id: deleteTask.list.id,
-      filter: { completed: { eq: false } }
-    }
-  });
-  client.writeQuery({
-    query: listDetailQuery,
-    variables: {
-      ...ListDetail.listDetailQueryDefaultVariables,
-      id: deleteTask.list.id,
-      filter: { completed: { eq: false } }
-    },
-    data: {
-      getList: {
-        ...detail.getList,
-        tasks: {
-          ...detail.getList.tasks,
-          items: removeFromArray(detail.getList.tasks.items, deleteTask)
-        }
-      }
-    }
-  });
+  updateIncompleteQuery(client, deleteTask, removeFromArray);
+  updateCompletedQuery(client, deleteTask, removeFromArray);
 };

@@ -6,7 +6,8 @@ import { ListDetail, ListSidebar, TaskDetail } from "./features";
 import {
   Task,
   updateCreateTask,
-  updateDeleteTask
+  updateDeleteTask,
+  updateUpdateTask
 } from "./features/Task/graphql";
 import { addToArray, removeFromArray } from "./lib";
 
@@ -16,7 +17,7 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const App = ({ createTask, deleteTask }) => {
+const App = ({ createTask, deleteTask, updateTask }) => {
   let [selectedList, setSelectedList] = useState(null);
   let [selectedTasks, setSelectedTasks] = useState([]);
 
@@ -51,6 +52,12 @@ const App = ({ createTask, deleteTask }) => {
                 );
               }}
               onCreate={name => createTask(selectedList.id, name)}
+              onCompleteSelected={() => {
+                selectedTasks.forEach(task =>
+                  updateTask(task, { completed: true })
+                );
+                setSelectedTasks([]);
+              }}
               onDeleteSelected={() => {
                 selectedTasks.forEach(deleteTask);
                 setSelectedTasks([]);
@@ -130,6 +137,9 @@ export default compose(
     })
   }),
   graphql(Task.mutations.updateTask, {
+    options: {
+      update: updateUpdateTask
+    },
     props: props => ({
       updateTask: (task, newProps) =>
         props.mutate({
