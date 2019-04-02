@@ -51,7 +51,10 @@ const App = ({ createTask, deleteTask }) => {
                 );
               }}
               onCreate={name => createTask(selectedList.id, name)}
-              onDelete={deleteTask}
+              onDeleteSelected={() => {
+                selectedTasks.forEach(deleteTask);
+                setSelectedTasks([]);
+              }}
             />
           ) : null}
         </Box>

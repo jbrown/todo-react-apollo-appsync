@@ -199,25 +199,29 @@ export const updateUpdateTask = (client, { data: { updateTask } }) => {
 };
 
 export const updateDeleteTask = (client, { data: { deleteTask } }) => {
-  console.log("result", deleteTask);
-  let list = client.readFragment({
-    id: `List:${deleteTask.list.id}`,
-    fragment: ListFragment,
-    fragmentName: "ListFields"
-  });
-
-  let data = {
-    ...list,
-    tasks: {
-      ...list.tasks,
-      items: removeFromArray(list.tasks.items, deleteTask)
+  let detail = client.readQuery({
+    query: listDetailQuery,
+    variables: {
+      ...ListDetail.listDetailQueryDefaultVariables,
+      id: deleteTask.list.id,
+      filter: { completed: { eq: false } }
     }
-  };
-  console.log("updated", data);
-  client.writeFragment({
-    id: `List:${deleteTask.list.id}`,
-    fragment: ListFragment,
-    fragmentName: "ListFields",
-    data
+  });
+  client.writeQuery({
+    query: listDetailQuery,
+    variables: {
+      ...ListDetail.listDetailQueryDefaultVariables,
+      id: deleteTask.list.id,
+      filter: { completed: { eq: false } }
+    },
+    data: {
+      getList: {
+        ...detail.getList,
+        tasks: {
+          ...detail.getList.tasks,
+          items: removeFromArray(detail.getList.tasks.items, deleteTask)
+        }
+      }
+    }
   });
 };

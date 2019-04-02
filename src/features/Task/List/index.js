@@ -5,7 +5,6 @@ import { TaskListItem } from "./Item";
 export const TaskList = ({
   tasks,
   updateTask,
-  onDelete,
   onToggleSelectTask,
   selectedTasks
 }) => (
@@ -17,7 +16,6 @@ export const TaskList = ({
         isSelected={selectedTasks.some(i => item.id === i.id)}
         onClick={() => onToggleSelectTask(item)}
         onUpdate={newProps => updateTask(item, newProps)}
-        onDelete={() => onDelete(item)}
       />
     ))}
   </React.Fragment>

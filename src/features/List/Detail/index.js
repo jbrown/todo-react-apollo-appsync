@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
-import { Text, ToggleBadge } from "pcln-design-system";
+import { IconButton, Text, ToggleBadge } from "pcln-design-system";
 import { Box, Flex, QuickAdd } from "../../../components";
 import { TaskList } from "../../Task/List";
 import { listDetailQuery } from "../graphql";
 
 export const ListDetail = ({
   onCreate,
-  onDelete,
+  onDeleteSelected,
   onUpdate,
   list,
   selectedTasks,
@@ -33,7 +33,12 @@ export const ListDetail = ({
         </ToggleBadge>
       </Flex>
       {viewingIncomplete ? (
-        <QuickAdd placeholder="Add Task" onSubmit={onCreate} px={2} />
+        <React.Fragment>
+          <Flex flexDirection="row" justifyContent="flex-end" px={1} mb={2}>
+            <IconButton name="Close" onClick={onDeleteSelected} />
+          </Flex>
+          <QuickAdd placeholder="Add Task" onSubmit={onCreate} px={2} />
+        </React.Fragment>
       ) : null}
 
       <Box>
@@ -69,7 +74,6 @@ export const ListDetail = ({
                 tasks={getList.tasks.items}
                 onToggleSelectTask={onToggleSelectTask}
                 selectedTasks={selectedTasks}
-                onDelete={onDelete}
               />
             );
           }}
