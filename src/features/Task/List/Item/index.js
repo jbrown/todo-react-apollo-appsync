@@ -1,35 +1,23 @@
 import React from "react";
 import gql from "graphql-tag";
-import { OutlineButton, CloseButton, Text } from "pcln-design-system";
-import { Box, Flex } from "../../../../components";
+import { Icon, Text } from "pcln-design-system";
+import { Flex } from "../../../../components";
 
-export const TaskListItem = ({
-  completed,
-  id,
-  name,
-  isSelected,
-  onUpdate,
-  onDelete,
-  onSelect
-}) => (
+export const TaskListItem = ({ completed, id, name, isSelected, onSelect }) => (
   <Flex
     flexDirection="row"
     alignItems="center"
     mb={1}
     p={2}
     bg={isSelected ? "#fff6dd" : null}
+    onClick={onSelect}
   >
-    <Box onClick={onSelect}>
-      <input type="checkbox" checked={isSelected} />
-      <Text>{name}</Text>
-    </Box>
-    <OutlineButton
-      size="small"
-      onClick={() => onUpdate({ completed: !completed })}
-    >
-      {completed ? "Incomplete" : "Complete"}
-    </OutlineButton>
-    <CloseButton onClick={onDelete}>delete</CloseButton>
+    <Icon
+      name={isSelected ? "BoxChecked" : "BoxEmpty"}
+      size={24}
+      color="blue"
+    />
+    <Text ml={2}>{name}</Text>
   </Flex>
 );
 
