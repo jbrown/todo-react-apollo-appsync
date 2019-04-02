@@ -50,7 +50,7 @@ class App extends Component {
           </Box>
           <Box flex={1} ml={2} px={2} bg="#fff" borderRadius={6}>
             {selectedTask ? (
-              <TaskDetail task={selectedTask} onDelete={this.deleteTask} />
+              <TaskDetail taskId={selectedTask.id} onDelete={this.deleteTask} />
             ) : null}
           </Box>
         </Flex>

@@ -29,6 +29,29 @@ export const TaskFragment = gql`
   ${CommentFragment}
 `;
 
+export const taskDetailQuery = gql`
+  query GetTask($id: ID!) {
+    getTask(id: $id) {
+      id
+      name
+      completed
+      version
+      list {
+        id
+        name
+      }
+      comments(limit: 10) {
+        items {
+          id
+          content
+          version
+        }
+        nextToken
+      }
+    }
+  }
+`;
+
 export const Task = {
   queries: {
     getTask: gql`
