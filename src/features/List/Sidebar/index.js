@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { IconButton, OutlineButton } from "pcln-design-system";
 import { Query, Mutation } from "react-apollo";
+import gql from "graphql-tag";
 import { Box, Flex, QuickAdd } from "../../../components";
 import {
-  Lists,
+  createListMutation,
   sidebarQuery,
   updateCreateList,
   updateListsFetchMore
@@ -17,7 +18,7 @@ export const ListSidebar = ({ selectedList, onSelectList }) => {
     <Query
       query={sidebarQuery}
       fetchPolicy="cache-and-network"
-      variables={{ limit: 100 }}
+      variables={{ ...ListSidebar.sidebarQueryDefaultVariables }}
       onCompleted={data => {
         if (!selectedList && data.listLists.items.length > 0) {
           onSelectList(data.listLists.items[0]);
@@ -46,8 +47,9 @@ export const ListSidebar = ({ selectedList, onSelectList }) => {
             </Flex>
             {isShowingCreateForm ? (
               <Mutation
-                mutation={Lists.mutations.create}
+                mutation={createListMutation}
                 update={updateCreateList}
+                onCompleted={() => setIsShowingCreateForm(false)}
               >
                 {(createList, { data, loading, error }) => (
                   <QuickAdd
@@ -92,8 +94,11 @@ export const ListSidebar = ({ selectedList, onSelectList }) => {
                   size="small"
                   onClick={() =>
                     fetchMore({
-                      query: Lists.queries.listLists,
-                      variables: { nextToken: data.listLists.nextToken },
+                      query: sidebarQuery,
+                      variables: {
+                        ...ListSidebar.sidebarQueryDefaultVariables,
+                        nextToken: data.listLists.nextToken
+                      },
                       updateQuery: updateListsFetchMore
                     })
                   }
@@ -107,4 +112,21 @@ export const ListSidebar = ({ selectedList, onSelectList }) => {
       }}
     </Query>
   );
+};
+
+ListSidebar.listFragment = gql`
+  fragment ListSidebarListFields on List {
+    id
+    name
+    version
+    tasks(filter: { completed: { eq: false } }, limit: 10) {
+      items {
+        id
+      }
+    }
+  }
+`;
+
+ListSidebar.sidebarQueryDefaultVariables = {
+  limit: 40
 };

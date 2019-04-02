@@ -1,5 +1,6 @@
 import gql from "graphql-tag";
 import { addToArray, removeFromArray } from "../../lib";
+import { ListSidebar } from "./Sidebar";
 
 const CommentFragment = gql`
   fragment CommentFields on Comment {
@@ -82,19 +83,21 @@ export const sidebarQuery = gql`
   ) {
     listLists(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
-        id
-        name
-        version
-        tasks(filter: { completed: { eq: false } }, limit: 50) {
-          items {
-            id
-          }
-          nextToken
-        }
+        ...ListSidebarListFields
       }
       nextToken
     }
   }
+  ${ListSidebar.listFragment}
+`;
+
+export const createListMutation = gql`
+  mutation CreateList($input: CreateListInput!) {
+    createList(input: $input) {
+      ...ListSidebarListFields
+    }
+  }
+  ${ListSidebar.listFragment}
 `;
 
 export const Lists = {
@@ -117,14 +120,6 @@ export const Lists = {
   },
 
   mutations: {
-    create: gql`
-      mutation CreateList($input: CreateListInput!) {
-        createList(input: $input) {
-          ...ListFields
-        }
-      }
-      ${ListFragment}
-    `,
     delete: gql`
       mutation DeleteList($input: DeleteListInput!) {
         deleteList(input: $input) {
@@ -137,14 +132,21 @@ export const Lists = {
 };
 
 export const updateCreateList = (client, { data: { createList } }) => {
-  let origList = client.readQuery({ query: Lists.queries.listLists });
+  let origList = client.readQuery({
+    query: sidebarQuery,
+    variables: ListSidebar.sidebarQueryDefaultVariables
+  });
   let data = {
     listLists: {
       ...origList.listLists,
       items: addToArray(origList.listLists.items, createList)
     }
   };
-  client.writeQuery({ query: Lists.queries.listLists, data });
+  client.writeQuery({
+    query: sidebarQuery,
+    variables: ListSidebar.sidebarQueryDefaultVariables,
+    data
+  });
 };
 
 export const updateDeleteList = (client, { data: { deleteList } }) => {
