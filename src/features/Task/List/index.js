@@ -1,7 +1,8 @@
 import React from "react";
-import TaskListItem from "./Item";
+import gql from "graphql-tag";
+import { TaskListItem } from "./Item";
 
-export default ({
+export const TaskList = ({
   tasks,
   updateTask,
   onDelete,
@@ -21,3 +22,13 @@ export default ({
     ))}
   </React.Fragment>
 );
+
+TaskList.fragment = gql`
+  fragment TaskListFragment on ModelTaskConnection {
+    items {
+      ...TaskListItemFragment
+    }
+    nextToken
+  }
+  ${TaskListItem.fragment}
+`;

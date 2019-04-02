@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Query } from "react-apollo";
+import gql from "graphql-tag";
 import { ToggleBadge } from "pcln-design-system";
 import { Box, Flex, QuickAdd } from "../../../components";
-import TaskList from "../../Task/List";
+import { TaskList } from "../../Task/List";
 import { listDetailQuery } from "../graphql";
 
 export const ListDetail = ({
@@ -68,3 +69,22 @@ export const ListDetail = ({
     </Flex>
   );
 };
+
+ListDetail.listFragment = gql`
+  fragment ListDetailListFields on List {
+    id
+    name
+    createdAt
+    updatedAt
+    version
+    tasks(
+      filter: $filter
+      sortDirection: $sortDirection
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      ...TaskListFragment
+    }
+  }
+  ${TaskList.fragment}
+`;

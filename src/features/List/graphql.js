@@ -1,6 +1,7 @@
 import gql from "graphql-tag";
 import { addToArray, removeFromArray } from "../../lib";
 import { ListSidebar } from "./Sidebar";
+import { ListDetail } from "./Detail";
 
 const CommentFragment = gql`
   fragment CommentFields on Comment {
@@ -54,25 +55,10 @@ export const listDetailQuery = gql`
     $nextToken: String
   ) {
     getList(id: $id) {
-      id
-      name
-      createdAt
-      updatedAt
-      version
-      tasks(
-        filter: $filter
-        sortDirection: $sortDirection
-        limit: $limit
-        nextToken: $nextToken
-      ) {
-        items {
-          ...TaskFields
-        }
-        nextToken
-      }
+      ...ListDetailListFields
     }
   }
-  ${TaskFragment}
+  ${ListDetail.listFragment}
 `;
 
 export const sidebarQuery = gql`
