@@ -44,7 +44,7 @@ export const ListDetail = ({
               <IconButton name="Close" color="gray" />
             </ButtonBar.Button>
           </ButtonBar>
-          <QuickAdd placeholder="Add Task" onSubmit={onCreate} mx={2} />
+          <QuickAdd placeholder="Add Task" onSubmit={onCreate} mx={2} mb={2} />
         </React.Fragment>
       ) : null}
 
