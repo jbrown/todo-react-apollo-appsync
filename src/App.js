@@ -16,7 +16,7 @@ const App = ({ createTask, deleteTask, updateTask }) => {
 
   return (
     <Flex flexDirection="column" className="main-container">
-      <Header />
+      <Header mb={2} />
       <Flex flexDirection="row" flex={1} pb={2} px={2}>
         <ListSidebar
           flex={0.5}
