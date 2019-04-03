@@ -14,16 +14,9 @@ export const createList = `mutation CreateList($input: CreateListInput!) {
         completed
         createdAt
         updatedAt
-        list {
-          id
-          name
-          createdAt
-          updatedAt
-          version
-        }
-        comments {
-          nextToken
-        }
+        dueAt
+        priority
+        tags
         version
       }
       nextToken
@@ -45,16 +38,9 @@ export const updateList = `mutation UpdateList($input: UpdateListInput!) {
         completed
         createdAt
         updatedAt
-        list {
-          id
-          name
-          createdAt
-          updatedAt
-          version
-        }
-        comments {
-          nextToken
-        }
+        dueAt
+        priority
+        tags
         version
       }
       nextToken
@@ -76,16 +62,9 @@ export const deleteList = `mutation DeleteList($input: DeleteListInput!) {
         completed
         createdAt
         updatedAt
-        list {
-          id
-          name
-          createdAt
-          updatedAt
-          version
-        }
-        comments {
-          nextToken
-        }
+        dueAt
+        priority
+        tags
         version
       }
       nextToken
@@ -101,20 +80,15 @@ export const createTask = `mutation CreateTask($input: CreateTaskInput!) {
     completed
     createdAt
     updatedAt
+    dueAt
+    priority
+    tags
     list {
       id
       name
       createdAt
       updatedAt
       tasks {
-        items {
-          id
-          name
-          completed
-          createdAt
-          updatedAt
-          version
-        }
         nextToken
       }
       version
@@ -125,14 +99,6 @@ export const createTask = `mutation CreateTask($input: CreateTaskInput!) {
         content
         createdAt
         updatedAt
-        task {
-          id
-          name
-          completed
-          createdAt
-          updatedAt
-          version
-        }
         version
       }
       nextToken
@@ -148,20 +114,15 @@ export const updateTask = `mutation UpdateTask($input: UpdateTaskInput!) {
     completed
     createdAt
     updatedAt
+    dueAt
+    priority
+    tags
     list {
       id
       name
       createdAt
       updatedAt
       tasks {
-        items {
-          id
-          name
-          completed
-          createdAt
-          updatedAt
-          version
-        }
         nextToken
       }
       version
@@ -172,14 +133,6 @@ export const updateTask = `mutation UpdateTask($input: UpdateTaskInput!) {
         content
         createdAt
         updatedAt
-        task {
-          id
-          name
-          completed
-          createdAt
-          updatedAt
-          version
-        }
         version
       }
       nextToken
@@ -195,20 +148,15 @@ export const deleteTask = `mutation DeleteTask($input: DeleteTaskInput!) {
     completed
     createdAt
     updatedAt
+    dueAt
+    priority
+    tags
     list {
       id
       name
       createdAt
       updatedAt
       tasks {
-        items {
-          id
-          name
-          completed
-          createdAt
-          updatedAt
-          version
-        }
         nextToken
       }
       version
@@ -219,14 +167,6 @@ export const deleteTask = `mutation DeleteTask($input: DeleteTaskInput!) {
         content
         createdAt
         updatedAt
-        task {
-          id
-          name
-          completed
-          createdAt
-          updatedAt
-          version
-        }
         version
       }
       nextToken
@@ -247,24 +187,17 @@ export const createComment = `mutation CreateComment($input: CreateCommentInput!
       completed
       createdAt
       updatedAt
+      dueAt
+      priority
+      tags
       list {
         id
         name
         createdAt
         updatedAt
-        tasks {
-          nextToken
-        }
         version
       }
       comments {
-        items {
-          id
-          content
-          createdAt
-          updatedAt
-          version
-        }
         nextToken
       }
       version
@@ -285,24 +218,17 @@ export const updateComment = `mutation UpdateComment($input: UpdateCommentInput!
       completed
       createdAt
       updatedAt
+      dueAt
+      priority
+      tags
       list {
         id
         name
         createdAt
         updatedAt
-        tasks {
-          nextToken
-        }
         version
       }
       comments {
-        items {
-          id
-          content
-          createdAt
-          updatedAt
-          version
-        }
         nextToken
       }
       version
@@ -323,24 +249,17 @@ export const deleteComment = `mutation DeleteComment($input: DeleteCommentInput!
       completed
       createdAt
       updatedAt
+      dueAt
+      priority
+      tags
       list {
         id
         name
         createdAt
         updatedAt
-        tasks {
-          nextToken
-        }
         version
       }
       comments {
-        items {
-          id
-          content
-          createdAt
-          updatedAt
-          version
-        }
         nextToken
       }
       version

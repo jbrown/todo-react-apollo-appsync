@@ -14,16 +14,9 @@ export const getList = `query GetList($id: ID!) {
         completed
         createdAt
         updatedAt
-        list {
-          id
-          name
-          createdAt
-          updatedAt
-          version
-        }
-        comments {
-          nextToken
-        }
+        dueAt
+        priority
+        tags
         version
       }
       nextToken
@@ -44,14 +37,6 @@ export const listLists = `query ListLists(
       createdAt
       updatedAt
       tasks {
-        items {
-          id
-          name
-          completed
-          createdAt
-          updatedAt
-          version
-        }
         nextToken
       }
       version
@@ -67,20 +52,15 @@ export const getTask = `query GetTask($id: ID!) {
     completed
     createdAt
     updatedAt
+    dueAt
+    priority
+    tags
     list {
       id
       name
       createdAt
       updatedAt
       tasks {
-        items {
-          id
-          name
-          completed
-          createdAt
-          updatedAt
-          version
-        }
         nextToken
       }
       version
@@ -91,14 +71,6 @@ export const getTask = `query GetTask($id: ID!) {
         content
         createdAt
         updatedAt
-        task {
-          id
-          name
-          completed
-          createdAt
-          updatedAt
-          version
-        }
         version
       }
       nextToken
@@ -119,24 +91,17 @@ export const listTasks = `query ListTasks(
       completed
       createdAt
       updatedAt
+      dueAt
+      priority
+      tags
       list {
         id
         name
         createdAt
         updatedAt
-        tasks {
-          nextToken
-        }
         version
       }
       comments {
-        items {
-          id
-          content
-          createdAt
-          updatedAt
-          version
-        }
         nextToken
       }
       version
@@ -157,24 +122,17 @@ export const getComment = `query GetComment($id: ID!) {
       completed
       createdAt
       updatedAt
+      dueAt
+      priority
+      tags
       list {
         id
         name
         createdAt
         updatedAt
-        tasks {
-          nextToken
-        }
         version
       }
       comments {
-        items {
-          id
-          content
-          createdAt
-          updatedAt
-          version
-        }
         nextToken
       }
       version
@@ -200,16 +158,9 @@ export const listComments = `query ListComments(
         completed
         createdAt
         updatedAt
-        list {
-          id
-          name
-          createdAt
-          updatedAt
-          version
-        }
-        comments {
-          nextToken
-        }
+        dueAt
+        priority
+        tags
         version
       }
       version

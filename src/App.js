@@ -82,7 +82,9 @@ export default compose(
             input: {
               name,
               taskListId: listId,
-              completed: false
+              completed: false,
+              priority: "NO_PRIORITY",
+              tags: []
             }
           },
           optimisticResponse: {
@@ -94,6 +96,8 @@ export default compose(
               completed: false,
               createdAt: "",
               updatedAt: "",
+              priority: "NO_PRIORITY",
+              tags: [],
               version: 1,
               list: {
                 __typename: "List",

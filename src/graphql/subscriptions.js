@@ -14,16 +14,9 @@ export const onCreateList = `subscription OnCreateList {
         completed
         createdAt
         updatedAt
-        list {
-          id
-          name
-          createdAt
-          updatedAt
-          version
-        }
-        comments {
-          nextToken
-        }
+        dueAt
+        priority
+        tags
         version
       }
       nextToken
@@ -45,16 +38,9 @@ export const onUpdateList = `subscription OnUpdateList {
         completed
         createdAt
         updatedAt
-        list {
-          id
-          name
-          createdAt
-          updatedAt
-          version
-        }
-        comments {
-          nextToken
-        }
+        dueAt
+        priority
+        tags
         version
       }
       nextToken
@@ -76,16 +62,9 @@ export const onDeleteList = `subscription OnDeleteList {
         completed
         createdAt
         updatedAt
-        list {
-          id
-          name
-          createdAt
-          updatedAt
-          version
-        }
-        comments {
-          nextToken
-        }
+        dueAt
+        priority
+        tags
         version
       }
       nextToken
@@ -101,20 +80,15 @@ export const onCreateTask = `subscription OnCreateTask {
     completed
     createdAt
     updatedAt
+    dueAt
+    priority
+    tags
     list {
       id
       name
       createdAt
       updatedAt
       tasks {
-        items {
-          id
-          name
-          completed
-          createdAt
-          updatedAt
-          version
-        }
         nextToken
       }
       version
@@ -125,14 +99,6 @@ export const onCreateTask = `subscription OnCreateTask {
         content
         createdAt
         updatedAt
-        task {
-          id
-          name
-          completed
-          createdAt
-          updatedAt
-          version
-        }
         version
       }
       nextToken
@@ -148,20 +114,15 @@ export const onUpdateTask = `subscription OnUpdateTask {
     completed
     createdAt
     updatedAt
+    dueAt
+    priority
+    tags
     list {
       id
       name
       createdAt
       updatedAt
       tasks {
-        items {
-          id
-          name
-          completed
-          createdAt
-          updatedAt
-          version
-        }
         nextToken
       }
       version
@@ -172,14 +133,6 @@ export const onUpdateTask = `subscription OnUpdateTask {
         content
         createdAt
         updatedAt
-        task {
-          id
-          name
-          completed
-          createdAt
-          updatedAt
-          version
-        }
         version
       }
       nextToken
@@ -195,20 +148,15 @@ export const onDeleteTask = `subscription OnDeleteTask {
     completed
     createdAt
     updatedAt
+    dueAt
+    priority
+    tags
     list {
       id
       name
       createdAt
       updatedAt
       tasks {
-        items {
-          id
-          name
-          completed
-          createdAt
-          updatedAt
-          version
-        }
         nextToken
       }
       version
@@ -219,14 +167,6 @@ export const onDeleteTask = `subscription OnDeleteTask {
         content
         createdAt
         updatedAt
-        task {
-          id
-          name
-          completed
-          createdAt
-          updatedAt
-          version
-        }
         version
       }
       nextToken
@@ -247,24 +187,17 @@ export const onCreateComment = `subscription OnCreateComment {
       completed
       createdAt
       updatedAt
+      dueAt
+      priority
+      tags
       list {
         id
         name
         createdAt
         updatedAt
-        tasks {
-          nextToken
-        }
         version
       }
       comments {
-        items {
-          id
-          content
-          createdAt
-          updatedAt
-          version
-        }
         nextToken
       }
       version
@@ -285,24 +218,17 @@ export const onUpdateComment = `subscription OnUpdateComment {
       completed
       createdAt
       updatedAt
+      dueAt
+      priority
+      tags
       list {
         id
         name
         createdAt
         updatedAt
-        tasks {
-          nextToken
-        }
         version
       }
       comments {
-        items {
-          id
-          content
-          createdAt
-          updatedAt
-          version
-        }
         nextToken
       }
       version
@@ -323,24 +249,17 @@ export const onDeleteComment = `subscription OnDeleteComment {
       completed
       createdAt
       updatedAt
+      dueAt
+      priority
+      tags
       list {
         id
         name
         createdAt
         updatedAt
-        tasks {
-          nextToken
-        }
         version
       }
       comments {
-        items {
-          id
-          content
-          createdAt
-          updatedAt
-          version
-        }
         nextToken
       }
       version

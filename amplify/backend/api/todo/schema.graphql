@@ -5,12 +5,21 @@ type List @model @versioned {
   updatedAt: String
   tasks: [Task] @connection(name: "ListTasks", sortField: "createdAt")
 }
+enum TaskPriority {
+  NO_PRIORITY
+  PRIORITY_ONE
+  PRIORITY_TWO
+  PRIORITY_THREE
+}
 type Task @model @versioned {
   id: ID!
   name: String!
   completed: Boolean!
   createdAt: String
   updatedAt: String
+  dueAt: String
+  priority: TaskPriority!
+  tags: [String]!
   list: List @connection(name: "ListTasks")
   comments: [Comment] @connection(name: "TaskComments", sortField: "createdAt")
 }
