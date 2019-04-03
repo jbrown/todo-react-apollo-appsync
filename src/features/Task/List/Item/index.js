@@ -28,7 +28,7 @@ export const TaskListItem = ({
       size={18}
       color="blue"
     />
-    <Text ml={1}>{name}</Text>
+    <Text mx={1}>{name}</Text>
     <TagList tags={tags} />
   </TaskListItemWrapper>
 );

@@ -28,13 +28,17 @@ export const TaskDetail = ({ taskId, ...props }) => (
                 {task.name}
               </Text>
             </Flex>
-            <Flex mb={2}>
+            <Flex mb={1}>
               <Box flex={0.2}>Tags:</Box>
               <Box flex={1}>
                 {task.tags.length > 0 ? <TagList tags={task.tags} /> : "none"}
               </Box>
             </Flex>
-            <Box mb={2}>Comments ({task.comments.items.length})</Box>
+            <Flex>
+              <Box flex={0.2}>List:</Box>
+              <Box flex={1}>{task.list.name}</Box>
+            </Flex>
+            <Box mt={3}>Comments ({task.comments.items.length})</Box>
             <CommentList comments={task.comments.items} />
             <Mutation
               mutation={Comment.mutations.createComment}

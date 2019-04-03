@@ -6,7 +6,7 @@ const colors = ["lightBlue", "lightGreen", "lightRed", "lightOrange"];
 export const TagList = ({ tags }) => (
   <React.Fragment>
     {tags.map((tag, ix) => (
-      <Badge key={ix} bg={colors[ix % colors.length]} ml={1}>
+      <Badge key={ix} bg={colors[ix % colors.length]} mr={1}>
         {tag}
       </Badge>
     ))}
