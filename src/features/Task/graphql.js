@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 import { addToArray, removeFromArray } from "../../lib";
-import { ListFragment, listDetailQuery } from "../List/graphql";
+import { listDetailQuery } from "../List/graphql";
 import { ListDetail } from "../List";
 
 export const CommentFragment = gql`
