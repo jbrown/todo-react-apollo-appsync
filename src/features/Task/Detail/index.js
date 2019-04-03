@@ -63,7 +63,9 @@ export const TaskDetail = ({ selectedTasks, onClearSelection, ...props }) => {
                   <Box flex={0.2}>List:</Box>
                   <Box flex={1}>{task.list.name}</Box>
                 </Flex>
-                <Box mt={3}>Comments ({task.comments.items.length})</Box>
+                <Box mb={1} mt={3}>
+                  Comments ({task.comments.items.length})
+                </Box>
                 <CommentList comments={task.comments.items} />
                 <Mutation
                   mutation={Comment.mutations.createComment}
