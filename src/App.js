@@ -55,16 +55,13 @@ const App = ({ createTask, deleteTask, updateTask }) => {
             }}
           />
         ) : null}
-
-        {selectedTasks.length === 1 ? (
-          <TaskDetail
-            flex={1}
-            ml={2}
-            taskId={selectedTasks[0].id}
-            priority={selectedTasks[0].priority}
-            onDelete={deleteTask}
-          />
-        ) : null}
+        <TaskDetail
+          flex={1}
+          ml={2}
+          selectedTasks={selectedTasks}
+          onDelete={deleteTask}
+          onClearSelection={() => setSelectedTasks([])}
+        />
       </Flex>
     </Flex>
   );
