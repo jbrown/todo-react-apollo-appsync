@@ -36,6 +36,8 @@ export const taskDetailQuery = gql`
       id
       name
       completed
+      priority
+      tags
       version
       list {
         id

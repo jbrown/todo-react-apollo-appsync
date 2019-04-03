@@ -3,7 +3,7 @@ import gql from "graphql-tag";
 import styled from "styled-components";
 import { Icon, Text } from "pcln-design-system";
 import { Flex } from "../../../../components";
-import { PriorityIndicator } from "../../index";
+import { PriorityIndicator, TagList } from "../../index";
 
 export const TaskListItem = ({
   completed,
@@ -29,6 +29,7 @@ export const TaskListItem = ({
       color="blue"
     />
     <Text ml={1}>{name}</Text>
+    <TagList tags={tags} />
   </TaskListItemWrapper>
 );
 
