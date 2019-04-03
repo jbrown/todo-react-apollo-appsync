@@ -58,4 +58,8 @@ TaskListItem.fragment = gql`
 const TaskListItemWrapper = styled(Flex)`
   border-bottom: 1px solid ${props => props.theme.colors.borderGray};
   cursor: pointer;
+
+  &:first-child {
+    border-top: 1px solid ${props => props.theme.colors.borderGray};
+  }
 `;
