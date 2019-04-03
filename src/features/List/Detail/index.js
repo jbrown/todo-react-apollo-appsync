@@ -13,12 +13,13 @@ export const ListDetail = ({
   onUpdate,
   list,
   selectedTasks,
-  onToggleSelectTask
+  onToggleSelectTask,
+  ...props
 }) => {
   const [viewingIncomplete, setViewingIncomplete] = useState(true);
 
   return (
-    <Flex flexDirection="column">
+    <Flex {...props} flexDirection="column" bg="#fff" borderRadius={6}>
       <Flex flexDirection="row" p={1}>
         <ToggleBadge
           selected={viewingIncomplete}

@@ -6,8 +6,8 @@ import { Comment } from "../../Comment/graphql";
 import CommentList from "../../Comment/List";
 import { taskDetailQuery } from "../graphql";
 
-export const TaskDetail = ({ taskId }) => (
-  <Flex flexDirection="column">
+export const TaskDetail = ({ taskId, ...props }) => (
+  <Flex {...props} flexDirection="column" bg="#fff" borderRadius={6}>
     <Query query={taskDetailQuery} variables={{ id: taskId }}>
       {({ data: { getTask: task }, loading, error }) => {
         if (error) {

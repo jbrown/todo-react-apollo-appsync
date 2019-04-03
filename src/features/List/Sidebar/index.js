@@ -11,7 +11,7 @@ import {
 } from "../graphql";
 import ListSidebarItem from "./Item";
 
-export const ListSidebar = ({ selectedList, onSelectList }) => {
+export const ListSidebar = ({ selectedList, onSelectList, ...props }) => {
   let [isShowingCreateForm, setIsShowingCreateForm] = useState(false);
 
   return (
@@ -35,7 +35,7 @@ export const ListSidebar = ({ selectedList, onSelectList }) => {
         }
 
         return (
-          <Flex flexDirection="column">
+          <Flex {...props} flexDirection="column">
             <Flex flexDirection="row" m={2}>
               <Box flex={1}>Lists ({data.listLists.items.length})</Box>
               <IconButton

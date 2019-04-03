@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { compose, graphql } from "react-apollo";
-import { createGlobalStyle } from "styled-components";
-import { Box, Flex, Header } from "./components";
+import { Flex, Header } from "./components";
 import { ListDetail, ListSidebar, TaskDetail } from "./features";
 import {
   Task,
@@ -11,65 +10,61 @@ import {
 } from "./features/Task/graphql";
 import { addToArray, removeFromArray } from "./lib";
 
-const GlobalStyle = createGlobalStyle`
-  html, body {
-    background-color: #eee;
-  }
-`;
-
 const App = ({ createTask, deleteTask, updateTask }) => {
   let [selectedList, setSelectedList] = useState(null);
   let [selectedTasks, setSelectedTasks] = useState([]);
 
   return (
-    <Flex flexDirection="column">
-      <GlobalStyle />
+    <Flex flexDirection="column" className="main-container">
       <Header />
-      <Flex flexDirection="row" width={1} px={2}>
-        <Box flex={0.5}>
-          <ListSidebar
-            selectedList={selectedList}
-            onSelectList={list => {
-              setSelectedList(list);
+      <Flex flexDirection="row" flex={1} pb={2} px={2}>
+        <ListSidebar
+          flex={0.5}
+          selectedList={selectedList}
+          onSelectList={list => {
+            setSelectedList(list);
+            setSelectedTasks([]);
+          }}
+        />
+        {selectedList ? (
+          <ListDetail
+            flex={1}
+            list={selectedList}
+            selectedTasks={selectedTasks}
+            onToggleSelectTask={task => {
+              let alreadySelected = selectedTasks.some(
+                item => item.id === task.id
+              );
+
+              setSelectedTasks(
+                alreadySelected
+                  ? removeFromArray(selectedTasks, task)
+                  : addToArray(selectedTasks, task)
+              );
+            }}
+            onCreate={name => createTask(selectedList.id, name)}
+            onCompleteSelected={() => {
+              selectedTasks.forEach(task =>
+                updateTask(task, { completed: true })
+              );
+              setSelectedTasks([]);
+            }}
+            onDeleteSelected={() => {
+              selectedTasks.forEach(deleteTask);
               setSelectedTasks([]);
             }}
           />
-        </Box>
-        <Box flex={1} bg="#fff" borderRadius={6}>
-          {selectedList ? (
-            <ListDetail
-              list={selectedList}
-              selectedTasks={selectedTasks}
-              onToggleSelectTask={task => {
-                let alreadySelected = selectedTasks.some(
-                  item => item.id === task.id
-                );
+        ) : null}
 
-                setSelectedTasks(
-                  alreadySelected
-                    ? removeFromArray(selectedTasks, task)
-                    : addToArray(selectedTasks, task)
-                );
-              }}
-              onCreate={name => createTask(selectedList.id, name)}
-              onCompleteSelected={() => {
-                selectedTasks.forEach(task =>
-                  updateTask(task, { completed: true })
-                );
-                setSelectedTasks([]);
-              }}
-              onDeleteSelected={() => {
-                selectedTasks.forEach(deleteTask);
-                setSelectedTasks([]);
-              }}
-            />
-          ) : null}
-        </Box>
-        <Box flex={1} ml={2} px={2} bg="#fff" borderRadius={6}>
-          {selectedTasks.length === 1 ? (
-            <TaskDetail taskId={selectedTasks[0].id} onDelete={deleteTask} />
-          ) : null}
-        </Box>
+        {selectedTasks.length === 1 ? (
+          <TaskDetail
+            flex={1}
+            ml={2}
+            px={2}
+            taskId={selectedTasks[0].id}
+            onDelete={deleteTask}
+          />
+        ) : null}
       </Flex>
     </Flex>
   );

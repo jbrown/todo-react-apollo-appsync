@@ -23,17 +23,31 @@ const client = new Client({
 
 const GlobalStyle = createGlobalStyle`
   ${normalize()}
+
+  html,
+  body,
+  #root,
+  .awsappsync,
+  .theme-provider-hoc {
+    background-color: #eee;
+    height: 100%;
+    overscroll-behavior: none;
+  }
+
+  .main-container {
+    height: 100vh;
+  }
 `;
 
 const WithProvider = () => {
   return (
     <ApolloProvider client={client}>
       <Rehydrated>
-        <ThemeProvider>
-          <div>
+        <ThemeProvider className="theme-provider-hoc">
+          <React.Fragment>
             <GlobalStyle />
             <App />
-          </div>
+          </React.Fragment>
         </ThemeProvider>
       </Rehydrated>
     </ApolloProvider>
