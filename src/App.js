@@ -60,8 +60,8 @@ const App = ({ createTask, deleteTask, updateTask }) => {
           <TaskDetail
             flex={1}
             ml={2}
-            px={2}
             taskId={selectedTasks[0].id}
+            priority={selectedTasks[0].priority}
             onDelete={deleteTask}
           />
         ) : null}

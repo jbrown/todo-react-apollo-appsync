@@ -3,21 +3,32 @@ import gql from "graphql-tag";
 import styled from "styled-components";
 import { Icon, Text } from "pcln-design-system";
 import { Flex } from "../../../../components";
+import { PriorityIndicator } from "../../index";
 
-export const TaskListItem = ({ completed, id, name, isSelected, onClick }) => (
+export const TaskListItem = ({
+  completed,
+  id,
+  name,
+  priority,
+  tags,
+  isSelected,
+  onClick
+}) => (
   <TaskListItemWrapper
     flexDirection="row"
     alignItems="center"
     bg={isSelected ? "#fff6dd" : null}
-    p={1}
+    px={2}
+    py={1}
     onClick={onClick}
   >
+    <PriorityIndicator mr={1} priority={priority} />
     <Icon
       name={isSelected ? "BoxChecked" : "BoxEmpty"}
-      size={24}
+      size={18}
       color="blue"
     />
-    <Text ml={2}>{name}</Text>
+    <Text ml={1}>{name}</Text>
   </TaskListItemWrapper>
 );
 
@@ -28,6 +39,8 @@ TaskListItem.fragment = gql`
     completed
     createdAt
     updatedAt
+    priority
+    tags
     version
     list {
       id

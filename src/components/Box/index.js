@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import {
+  alignSelf,
   borderRadius,
   flex,
   space,
@@ -7,11 +8,9 @@ import {
   color,
   textAlign
 } from "styled-system";
-//import PropTypes from "prop-types";
-//import theme from "./theme";
 
 export const Box = styled.div`
-  ${space} ${width} ${color} ${textAlign} ${flex} ${borderRadius}
+  ${alignSelf} ${space} ${width} ${color} ${textAlign} ${flex} ${borderRadius}
 `;
 
 Box.displayName = "Box";
@@ -21,6 +20,7 @@ Box.defaultProps = {
 };
 */
 Box.propTypes = {
+  ...alignSelf.propTypes,
   ...borderRadius.propTypes,
   ...flex.propTypes,
   ...space.propTypes,

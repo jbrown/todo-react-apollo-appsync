@@ -1,13 +1,15 @@
 import React from "react";
 import { Mutation, Query } from "react-apollo";
+import { Text } from "pcln-design-system";
 import { Box, Flex, QuickAdd } from "../../../components";
 import { updateCreateComment } from "../../Comment/graphql";
 import { Comment } from "../../Comment/graphql";
 import CommentList from "../../Comment/List";
+import { PriorityIndicator } from "../index";
 import { taskDetailQuery } from "../graphql";
 
-export const TaskDetail = ({ taskId, ...props }) => (
-  <Flex {...props} flexDirection="column" bg="#fff" borderRadius={6}>
+export const TaskDetail = ({ taskId, priority, ...props }) => (
+  <Flex {...props} flexDirection="column" p={2} bg="#fff" borderRadius={6}>
     <Query query={taskDetailQuery} variables={{ id: taskId }}>
       {({ data: { getTask: task }, loading, error }) => {
         if (error) {
@@ -20,7 +22,12 @@ export const TaskDetail = ({ taskId, ...props }) => (
 
         return (
           <React.Fragment>
-            <Box mb={2}>{task.name}</Box>
+            <Flex mb={2}>
+              <PriorityIndicator priority={priority} />
+              <Text fontSize={3} ml={1}>
+                {task.name}
+              </Text>
+            </Flex>
             <Box mb={2}>Comments ({task.comments.items.length})</Box>
             <CommentList comments={task.comments.items} />
             <Mutation
