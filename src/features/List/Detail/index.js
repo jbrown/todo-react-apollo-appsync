@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import { IconButton, Text, ToggleBadge } from "pcln-design-system";
-import { Box, Flex, QuickAdd } from "../../../components";
+import { Box, ButtonBar, Flex, QuickAdd } from "../../../components";
 import { TaskList } from "../../Task/List";
 import { listDetailQuery } from "../graphql";
 
@@ -36,11 +36,15 @@ export const ListDetail = ({
       </Flex>
       {viewingIncomplete ? (
         <React.Fragment>
-          <Flex flexDirection="row" justifyContent="flex-end" px={1} mb={2}>
-            <IconButton name="Check" onClick={onCompleteSelected} />
-            <IconButton name="Close" onClick={onDeleteSelected} />
-          </Flex>
-          <QuickAdd placeholder="Add Task" onSubmit={onCreate} px={2} />
+          <ButtonBar mb={2} mx={2} width={0.2}>
+            <ButtonBar.Button onClick={onCompleteSelected}>
+              <IconButton name="Check" color="gray" />
+            </ButtonBar.Button>
+            <ButtonBar.Button onClick={onDeleteSelected}>
+              <IconButton name="Close" color="gray" />
+            </ButtonBar.Button>
+          </ButtonBar>
+          <QuickAdd placeholder="Add Task" onSubmit={onCreate} mx={2} />
         </React.Fragment>
       ) : null}
 
