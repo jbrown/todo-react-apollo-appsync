@@ -6,6 +6,9 @@ import { CommentListItem } from "./List/Item";
 export const createCommentMutation = gql`
   mutation CreateComment($input: CreateCommentInput!) {
     createComment(input: $input) {
+      task {
+        id
+      }
       ...CommentListItemFragment
     }
   }
