@@ -7,6 +7,7 @@
     "aws-appsync": "^1.7.2",
     "aws-appsync-react": "^1.2.7",
     "date-fns": "^2.0.0-alpha.27",
+    "graphql-anywhere": "^4.2.1",
     "graphql-tag": "^2.10.1",
     "pcln-design-system": "^2.0.2",
     "polished": "^3.1.0",

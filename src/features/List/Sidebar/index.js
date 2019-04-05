@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { IconButton, OutlineButton } from "pcln-design-system";
 import { Query, Mutation } from "react-apollo";
 import gql from "graphql-tag";
+import { filter } from "graphql-anywhere";
 import { Box, Flex, QuickAdd } from "../../../components";
 import { updateCreateList, updateListsFetchMore } from "../graphql";
 import { ListSidebarItem } from "./Item";
@@ -79,7 +80,7 @@ export const ListSidebar = ({ selectedList, onSelectList, ...props }) => {
               {data.listLists.items.map(item => (
                 <ListSidebarItem
                   key={item.id}
-                  {...item}
+                  {...filter(ListSidebarItem.fragment, item)}
                   isSelected={!!selectedList && item.id === selectedList.id}
                   onClick={() => onSelectList(item)}
                 />
@@ -110,16 +111,13 @@ export const ListSidebar = ({ selectedList, onSelectList, ...props }) => {
 };
 
 ListSidebar.fragment = gql`
-  fragment ListSidebarFragment on List {
-    id
-    name
-    version
-    tasks(filter: { completed: { eq: false } }, limit: 10) {
-      items {
-        id
-      }
+  fragment ListSidebarFragment on ModelListConnection {
+    items {
+      ...ListSidebarItemFragment
     }
+    nextToken
   }
+  ${ListSidebarItem.fragment}
 `;
 
 ListSidebar.sidebarQueryDefaultVariables = {
@@ -133,10 +131,7 @@ export const sidebarQuery = gql`
     $nextToken: String
   ) {
     listLists(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        ...ListSidebarFragment
-      }
-      nextToken
+      ...ListSidebarFragment
     }
   }
   ${ListSidebar.fragment}
@@ -145,17 +140,17 @@ export const sidebarQuery = gql`
 export const createListMutation = gql`
   mutation CreateList($input: CreateListInput!) {
     createList(input: $input) {
-      ...ListSidebarFragment
+      ...ListSidebarItemFragment
     }
   }
-  ${ListSidebar.fragment}
+  ${ListSidebarItem.fragment}
 `;
 
 export const deleteListMutation = gql`
   mutation DeleteList($input: DeleteListInput!) {
     deleteList(input: $input) {
-      ...ListSidebarFragment
+      ...ListSidebarItemFragment
     }
   }
-  ${ListSidebar.fragment}
+  ${ListSidebarItem.fragment}
 `;

@@ -1,24 +1,27 @@
 import React from "react";
 import gql from "graphql-tag";
+import { filter } from "graphql-anywhere";
 import { Card } from "pcln-design-system";
 import { CommentListItem } from "./Item";
 
-export const CommentList = ({ comments }) => (
+export const CommentList = ({ comments: { items } }) => (
   <React.Fragment>
-    {comments.map(item => (
+    {items.map(item => (
       <Card key={item.id} p={2} mb={2} borderRadius={4}>
-        <CommentListItem {...item} />
+        <CommentListItem {...filter(CommentListItem.fragment, item)} />
       </Card>
     ))}
   </React.Fragment>
 );
 
 CommentList.fragment = gql`
-  fragment CommentListFragment on ModelCommentConnection {
-    items {
-      ...CommentListItemFragment
+  fragment CommentListFragment on Task {
+    comments(limit: 10) {
+      items {
+        ...CommentListItemFragment
+      }
+      nextToken
     }
-    nextToken
   }
   ${CommentListItem.fragment}
 `;

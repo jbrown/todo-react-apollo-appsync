@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
+import { filter } from "graphql-anywhere";
 import { IconButton, Text, ToggleBadge } from "pcln-design-system";
 import { Box, ButtonBar, Flex, QuickAdd } from "../../../components";
 import { TaskList } from "../../Task/List";
@@ -77,7 +78,7 @@ export const ListDetail = ({
 
             return (
               <TaskList
-                tasks={getList.tasks.items}
+                {...filter(TaskList.fragment, getList)}
                 onToggleSelectTask={onToggleSelectTask}
                 selectedTasks={selectedTasks}
               />
@@ -92,18 +93,7 @@ export const ListDetail = ({
 ListDetail.fragment = gql`
   fragment ListDetailFragment on List {
     id
-    name
-    createdAt
-    updatedAt
-    version
-    tasks(
-      filter: $filter
-      sortDirection: $sortDirection
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      ...TaskListFragment
-    }
+    ...TaskListFragment
   }
   ${TaskList.fragment}
 `;

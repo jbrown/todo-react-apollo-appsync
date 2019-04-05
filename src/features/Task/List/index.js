@@ -1,18 +1,19 @@
 import React from "react";
 import gql from "graphql-tag";
+import { filter } from "graphql-anywhere";
 import { TaskListItem } from "./Item";
 
 export const TaskList = ({
-  tasks,
+  tasks: { items },
   updateTask,
   onToggleSelectTask,
   selectedTasks
 }) => (
   <React.Fragment>
-    {tasks.map(item => (
+    {items.map(item => (
       <TaskListItem
         key={item.id}
-        {...item}
+        {...filter(TaskListItem.fragment, item)}
         isSelected={selectedTasks.some(i => item.id === i.id)}
         onClick={() => onToggleSelectTask(item)}
         onUpdate={newProps => updateTask(item, newProps)}
@@ -22,11 +23,18 @@ export const TaskList = ({
 );
 
 TaskList.fragment = gql`
-  fragment TaskListFragment on ModelTaskConnection {
-    items {
-      ...TaskListItemFragment
+  fragment TaskListFragment on List {
+    tasks(
+      filter: $filter
+      sortDirection: $sortDirection
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        ...TaskListItemFragment
+      }
+      nextToken
     }
-    nextToken
   }
   ${TaskListItem.fragment}
 `;

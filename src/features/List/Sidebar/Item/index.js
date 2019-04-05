@@ -1,4 +1,5 @@
 import React from "react";
+import gql from "graphql-tag";
 import styled from "styled-components";
 import { Badge } from "pcln-design-system";
 import { Box, Flex } from "../../../../components";
@@ -21,3 +22,15 @@ export const ListSidebarItem = ({ isSelected, name, tasks, onClick }) => (
     {tasks.items.length > 0 ? <Badge>{tasks.items.length}</Badge> : null}
   </ListItemWrapper>
 );
+
+ListSidebarItem.fragment = gql`
+  fragment ListSidebarItemFragment on List {
+    id
+    name
+    tasks(filter: { completed: { eq: false } }, limit: 10) {
+      items {
+        id
+      }
+    }
+  }
+`;

@@ -1,5 +1,6 @@
 import React from "react";
 import gql from "graphql-tag";
+import { filter } from "graphql-anywhere";
 import { Mutation, Query } from "react-apollo";
 import { OutlineButton, Text } from "pcln-design-system";
 import { Box, Flex, QuickAdd } from "../../../components";
@@ -66,7 +67,7 @@ export const TaskDetail = ({ selectedTasks, onClearSelection, ...props }) => {
                 <Box mb={1} mt={3}>
                   Comments ({task.comments.items.length})
                 </Box>
-                <CommentList comments={task.comments.items} />
+                <CommentList {...filter(CommentList.fragment, task)} />
                 <Mutation
                   mutation={createCommentMutation}
                   update={updateCreateComment}
@@ -119,9 +120,7 @@ TaskDetail.fragment = gql`
       id
       name
     }
-    comments(limit: 10) {
-      ...CommentListFragment
-    }
+    ...CommentListFragment
   }
   ${CommentList.fragment}
 `;
