@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "aws-amplify": "^1.1.22",
+    "aws-amplify": "1.1.24",
     "aws-appsync": "^1.7.2",
     "aws-appsync-react": "^1.2.7",
     "date-fns": "^2.0.0-alpha.27",
