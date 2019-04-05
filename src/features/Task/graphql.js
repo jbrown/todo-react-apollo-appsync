@@ -1,137 +1,34 @@
 import gql from "graphql-tag";
 import { addToArray, removeFromArray } from "../../lib";
-import { listDetailQuery } from "../List/graphql";
+import { listDetailQuery } from "../List/Detail";
 import { ListDetail } from "../List";
+import { TaskListItem } from "./List/Item";
 
-export const CommentFragment = gql`
-  fragment CommentFields on Comment {
-    id
-    content
-  }
-`;
-
-export const TaskFragment = gql`
-  fragment TaskFields on Task {
-    id
-    name
-    completed
-    createdAt
-    updatedAt
-    version
-    list {
-      id
-    }
-    comments {
-      items {
-        ...CommentFields
-      }
+export const createTaskMutation = gql`
+  mutation CreateTask($input: CreateTaskInput!) {
+    createTask(input: $input) {
+      ...TaskListItemFragment
     }
   }
-  ${CommentFragment}
+  ${TaskListItem.fragment}
 `;
 
-export const taskDetailQuery = gql`
-  query GetTask($id: ID!) {
-    getTask(id: $id) {
+export const updateTaskMutation = gql`
+  mutation UpdateTask($input: UpdateTaskInput!) {
+    updateTask(input: $input) {
+      ...TaskListItemFragment
+    }
+  }
+  ${TaskListItem.fragment}
+`;
+
+export const deleteTaskMutation = gql`
+  mutation DeleteTask($input: DeleteTaskInput!) {
+    deleteTask(input: $input) {
       id
-      name
-      completed
-      priority
-      tags
-      version
       list {
         id
-        name
       }
-      comments(limit: 10) {
-        items {
-          id
-          content
-          version
-        }
-        nextToken
-      }
-    }
-  }
-`;
-
-export const Task = {
-  queries: {
-    getTask: gql`
-      query GetTask($id: ID!) {
-        getTask(id: $id) {
-          ...TaskFields
-        }
-      }
-      ${TaskFragment}
-    `
-  },
-  mutations: {
-    createTask: gql`
-      mutation CreateTask($input: CreateTaskInput!) {
-        createTask(input: $input) {
-          ...TaskFields
-        }
-      }
-      ${TaskFragment}
-    `,
-    updateTask: gql`
-      mutation UpdateTask($input: UpdateTaskInput!) {
-        updateTask(input: $input) {
-          ...TaskFields
-        }
-      }
-      ${TaskFragment}
-    `,
-    deleteTask: gql`
-      mutation DeleteTask($input: DeleteTaskInput!) {
-        deleteTask(input: $input) {
-          id
-          list {
-            id
-          }
-        }
-      }
-    `
-  }
-};
-
-export const listTasks = gql`
-  query ListTasks(
-    $filter: ModelTaskFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listTasks(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        name
-        completed
-        createdAt
-        updatedAt
-        list {
-          id
-          name
-          createdAt
-          updatedAt
-          tasks {
-            nextToken
-          }
-          version
-        }
-        comments {
-          items {
-            id
-            content
-            createdAt
-            updatedAt
-            version
-          }
-          nextToken
-        }
-        version
-      }
-      nextToken
     }
   }
 `;

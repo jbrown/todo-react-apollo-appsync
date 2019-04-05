@@ -3,7 +3,9 @@ import { compose, graphql } from "react-apollo";
 import { Flex, Header } from "./components";
 import { ListDetail, ListSidebar, TaskDetail } from "./features";
 import {
-  Task,
+  createTaskMutation,
+  updateTaskMutation,
+  deleteTaskMutation,
   updateCreateTask,
   updateDeleteTask,
   updateUpdateTask
@@ -68,7 +70,7 @@ const App = ({ createTask, deleteTask, updateTask }) => {
 };
 
 export default compose(
-  graphql(Task.mutations.createTask, {
+  graphql(createTaskMutation, {
     options: {
       update: updateCreateTask
     },
@@ -110,7 +112,7 @@ export default compose(
         })
     })
   }),
-  graphql(Task.mutations.deleteTask, {
+  graphql(deleteTaskMutation, {
     options: {
       update: updateDeleteTask
     },
@@ -132,7 +134,7 @@ export default compose(
         })
     })
   }),
-  graphql(Task.mutations.updateTask, {
+  graphql(updateTaskMutation, {
     options: {
       update: updateUpdateTask
     },

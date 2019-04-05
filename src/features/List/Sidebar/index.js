@@ -3,13 +3,8 @@ import { IconButton, OutlineButton } from "pcln-design-system";
 import { Query, Mutation } from "react-apollo";
 import gql from "graphql-tag";
 import { Box, Flex, QuickAdd } from "../../../components";
-import {
-  createListMutation,
-  sidebarQuery,
-  updateCreateList,
-  updateListsFetchMore
-} from "../graphql";
-import ListSidebarItem from "./Item";
+import { updateCreateList, updateListsFetchMore } from "../graphql";
+import { ListSidebarItem } from "./Item";
 
 export const ListSidebar = ({ selectedList, onSelectList, ...props }) => {
   let [isShowingCreateForm, setIsShowingCreateForm] = useState(false);
@@ -114,8 +109,8 @@ export const ListSidebar = ({ selectedList, onSelectList, ...props }) => {
   );
 };
 
-ListSidebar.listFragment = gql`
-  fragment ListSidebarListFields on List {
+ListSidebar.fragment = gql`
+  fragment ListSidebarFragment on List {
     id
     name
     version
@@ -130,3 +125,37 @@ ListSidebar.listFragment = gql`
 ListSidebar.sidebarQueryDefaultVariables = {
   limit: 40
 };
+
+export const sidebarQuery = gql`
+  query ListLists(
+    $filter: ModelListFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listLists(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        ...ListSidebarFragment
+      }
+      nextToken
+    }
+  }
+  ${ListSidebar.fragment}
+`;
+
+export const createListMutation = gql`
+  mutation CreateList($input: CreateListInput!) {
+    createList(input: $input) {
+      ...ListSidebarFragment
+    }
+  }
+  ${ListSidebar.fragment}
+`;
+
+export const deleteListMutation = gql`
+  mutation DeleteList($input: DeleteListInput!) {
+    deleteList(input: $input) {
+      ...ListSidebarFragment
+    }
+  }
+  ${ListSidebar.fragment}
+`;

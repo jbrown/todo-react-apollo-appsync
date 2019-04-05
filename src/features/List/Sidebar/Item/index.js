@@ -8,7 +8,7 @@ const ListItemWrapper = styled(Flex)`
   border-bottom-left-radius: 6px;
 `;
 
-export default ({ isSelected, name, tasks, onClick }) => (
+export const ListSidebarItem = ({ isSelected, name, tasks, onClick }) => (
   <ListItemWrapper
     flexDirection="row"
     my={1}

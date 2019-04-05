@@ -1,12 +1,37 @@
 import React from "react";
+import gql from "graphql-tag";
 import { Mutation, Query } from "react-apollo";
 import { OutlineButton, Text } from "pcln-design-system";
 import { Box, Flex, QuickAdd } from "../../../components";
 import { updateCreateComment } from "../../Comment/graphql";
-import { Comment } from "../../Comment/graphql";
-import CommentList from "../../Comment/List";
+import { createCommentMutation } from "../../Comment/graphql";
+import { CommentList } from "../../Comment/List";
 import { PriorityIndicator, TagList } from "../index";
-import { taskDetailQuery } from "../graphql";
+
+export const taskDetailQuery = gql`
+  query GetTask($id: ID!) {
+    getTask(id: $id) {
+      id
+      name
+      completed
+      priority
+      tags
+      version
+      list {
+        id
+        name
+      }
+      comments(limit: 10) {
+        items {
+          id
+          content
+          version
+        }
+        nextToken
+      }
+    }
+  }
+`;
 
 export const TaskDetail = ({ selectedTasks, onClearSelection, ...props }) => {
   if (selectedTasks.length === 0) {
@@ -68,7 +93,7 @@ export const TaskDetail = ({ selectedTasks, onClearSelection, ...props }) => {
                 </Box>
                 <CommentList comments={task.comments.items} />
                 <Mutation
-                  mutation={Comment.mutations.createComment}
+                  mutation={createCommentMutation}
                   update={updateCreateComment}
                 >
                   {createComment => (

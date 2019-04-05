@@ -4,7 +4,6 @@ import gql from "graphql-tag";
 import { IconButton, Text, ToggleBadge } from "pcln-design-system";
 import { Box, ButtonBar, Flex, QuickAdd } from "../../../components";
 import { TaskList } from "../../Task/List";
-import { listDetailQuery } from "../graphql";
 
 export const ListDetail = ({
   onCreate,
@@ -90,8 +89,8 @@ export const ListDetail = ({
   );
 };
 
-ListDetail.listFragment = gql`
-  fragment ListDetailListFields on List {
+ListDetail.fragment = gql`
+  fragment ListDetailFragment on List {
     id
     name
     createdAt
@@ -112,3 +111,18 @@ ListDetail.listFragment = gql`
 ListDetail.listDetailQueryDefaultVariables = {
   limit: 30
 };
+
+export const listDetailQuery = gql`
+  query getList(
+    $id: ID!
+    $filter: ModelTaskFilterInput
+    $sortDirection: ModelSortDirection
+    $limit: Int
+    $nextToken: String
+  ) {
+    getList(id: $id) {
+      ...ListDetailFragment
+    }
+  }
+  ${ListDetail.fragment}
+`;

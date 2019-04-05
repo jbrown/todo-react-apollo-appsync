@@ -1,30 +1,16 @@
 import gql from "graphql-tag";
 import { addToArray } from "../../lib";
-import { taskDetailQuery } from "../Task/graphql";
+import { taskDetailQuery } from "../Task/Detail";
+import { CommentListItem } from "./List/Item";
 
-export const CommentFragment = gql`
-  fragment CommentFields on Comment {
-    id
-    content
-    version
-    task {
-      id
+export const createCommentMutation = gql`
+  mutation CreateComment($input: CreateCommentInput!) {
+    createComment(input: $input) {
+      ...CommentListItemFragment
     }
   }
+  ${CommentListItem.fragment}
 `;
-
-export const Comment = {
-  mutations: {
-    createComment: gql`
-      mutation CreateComment($input: CreateCommentInput!) {
-        createComment(input: $input) {
-          ...CommentFields
-        }
-      }
-      ${CommentFragment}
-    `
-  }
-};
 
 export const updateCreateComment = (client, { data: { createComment } }) => {
   let detail = client.readQuery({
