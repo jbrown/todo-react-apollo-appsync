@@ -107,8 +107,7 @@ export const TaskDetail = ({ selectedTasks, onClearSelection, ...props }) => {
                                 __typename: "Task",
                                 id: task.id
                               },
-                              createdAt: "",
-                              updatedAt: "",
+                              createdAt: new Date().toISOString(),
                               version: 1
                             }
                           },
