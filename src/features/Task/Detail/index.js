@@ -22,15 +22,11 @@ export const taskDetailQuery = gql`
         name
       }
       comments(limit: 10) {
-        items {
-          id
-          content
-          version
-        }
-        nextToken
+        ...CommentListFragment
       }
     }
   }
+  ${CommentList.fragment}
 `;
 
 export const TaskDetail = ({ selectedTasks, onClearSelection, ...props }) => {
