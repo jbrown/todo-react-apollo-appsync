@@ -8,27 +8,6 @@ import { createCommentMutation } from "../../Comment/graphql";
 import { CommentList } from "../../Comment/List";
 import { PriorityIndicator, TagList } from "../index";
 
-export const taskDetailQuery = gql`
-  query GetTask($id: ID!) {
-    getTask(id: $id) {
-      id
-      name
-      completed
-      priority
-      tags
-      version
-      list {
-        id
-        name
-      }
-      comments(limit: 10) {
-        ...CommentListFragment
-      }
-    }
-  }
-  ${CommentList.fragment}
-`;
-
 export const TaskDetail = ({ selectedTasks, onClearSelection, ...props }) => {
   if (selectedTasks.length === 0) {
     return null;
@@ -127,3 +106,31 @@ export const TaskDetail = ({ selectedTasks, onClearSelection, ...props }) => {
     );
   }
 };
+
+TaskDetail.fragment = gql`
+  fragment TaskDetailFragment on Task {
+    id
+    name
+    completed
+    priority
+    tags
+    version
+    list {
+      id
+      name
+    }
+    comments(limit: 10) {
+      ...CommentListFragment
+    }
+  }
+  ${CommentList.fragment}
+`;
+
+export const taskDetailQuery = gql`
+  query GetTask($id: ID!) {
+    getTask(id: $id) {
+      ...TaskDetailFragment
+    }
+  }
+  ${TaskDetail.fragment}
+`;
