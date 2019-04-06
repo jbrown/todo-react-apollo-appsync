@@ -11,7 +11,7 @@
     "graphql-tag": "^2.10.1",
     "pcln-design-system": "2.0.4",
     "polished": "3.2.0",
-    "react": "^16.8.5",
+    "react": "16.8.6",
     "react-apollo": "^2.5.3",
     "react-dom": "^16.8.5",
     "react-scripts": "2.1.8",
