@@ -12,6 +12,8 @@ import { ApolloProvider } from "react-apollo";
 import { Rehydrated } from "aws-appsync-react";
 import awsConfig from "./aws-exports";
 
+console.log("env vars", process.env);
+
 const client = new Client({
   url: awsConfig.aws_appsync_graphqlEndpoint,
   region: awsConfig.aws_appsync_region,
