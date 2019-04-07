@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Hub } from "aws-amplify";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import { filter } from "graphql-anywhere";
@@ -17,6 +18,15 @@ export const ListDetail = ({
   ...props
 }) => {
   const [viewingIncomplete, setViewingIncomplete] = useState(true);
+
+  useEffect(() => {
+    Hub.dispatch("ga", {
+      event: "viewList",
+      data: {
+        name: list.name
+      }
+    });
+  }, [list]);
 
   return (
     <Flex {...props} flexDirection="column" bg="#fff" borderRadius={6}>

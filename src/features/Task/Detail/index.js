@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { Hub } from "aws-amplify";
 import gql from "graphql-tag";
 import { filter } from "graphql-anywhere";
 import { Mutation, Query } from "react-apollo";
@@ -10,7 +11,9 @@ import { CommentList } from "../../Comment/List";
 import { PriorityIndicator, TagList } from "../index";
 
 export const TaskDetail = ({ selectedTasks, onClearSelection, ...props }) => {
-  if (selectedTasks.length === 0) {
+  let [selectedTask] = selectedTasks;
+
+  if (!selectedTask) {
     return null;
   } else if (selectedTasks.length > 1) {
     return (
@@ -30,6 +33,15 @@ export const TaskDetail = ({ selectedTasks, onClearSelection, ...props }) => {
       </Flex>
     );
   } else {
+    useEffect(() => {
+      Hub.dispatch("ga", {
+        event: "viewTask",
+        data: {
+          name: selectedTask.name
+        }
+      });
+    }, [selectedTask]);
+
     return (
       <Flex {...props} flexDirection="column" p={2} bg="#fff" borderRadius={6}>
         <Query query={taskDetailQuery} variables={{ id: selectedTasks[0].id }}>

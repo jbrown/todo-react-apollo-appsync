@@ -3,6 +3,8 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
+import { Hub } from "aws-amplify";
+import ReactGA from "react-ga";
 import { ThemeProvider } from "pcln-design-system";
 import { createGlobalStyle } from "styled-components";
 import { normalize } from "polished";
@@ -12,7 +14,13 @@ import { ApolloProvider } from "react-apollo";
 import { Rehydrated } from "aws-appsync-react";
 import awsConfig from "./aws-exports";
 
-console.log("env vars", process.env);
+ReactGA.initialize("UA-137863139-1");
+
+Hub.listen("ga", data => {
+  if (process.env.REACT_APP_ENVIRONMENT === "prod") {
+    ReactGA.pageview(`/${data.payload.event}/${data.payload.data.name}`);
+  }
+});
 
 const client = new Client({
   url: awsConfig.aws_appsync_graphqlEndpoint,
