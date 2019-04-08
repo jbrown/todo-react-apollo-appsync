@@ -1,8 +1,9 @@
 import React from "react";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { Heading } from "pcln-design-system";
-import { Flex } from "../index";
+import { Box, Flex } from "../index";
 import { HeaderSocialLink } from "./SocialLink";
+import GitHubButton from "react-github-btn";
 
 export const Header = ({ ...props }) => {
   return (
@@ -16,7 +17,18 @@ export const Header = ({ ...props }) => {
       {...props}
     >
       <Heading color="white">Todo</Heading>
-      <Flex>
+      <Flex alignItems="center">
+        <Box mb="-6px">
+          {/* The Github iframe has some odd padding added. */}
+          <GitHubButton
+            href="https://github.com/jbrown/todo-react-apollo-appsync"
+            data-icon="octicon-star"
+            data-show-count="true"
+            aria-label="Star jbrown/todo-react-apollo-appsync on GitHub"
+          >
+            Star
+          </GitHubButton>
+        </Box>
         <HeaderSocialLink
           url="https://www.linkedin.com/in/justinandrewbrown/"
           title="Contact me on Linkedin"
