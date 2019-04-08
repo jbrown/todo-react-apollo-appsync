@@ -1,8 +1,8 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGithub } from "@fortawesome/free-brands-svg-icons";
+import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { Heading } from "pcln-design-system";
 import { Flex } from "../index";
+import { HeaderSocialLink } from "./SocialLink";
 
 export const Header = ({ ...props }) => {
   return (
@@ -10,19 +10,24 @@ export const Header = ({ ...props }) => {
       justifyContent="space-between"
       alignItems="center"
       py={2}
-      px={3}
+      pl={3}
+      pr={2}
       bg="darkBlue"
       {...props}
     >
       <Heading color="white">Todo</Heading>
-      <a
-        href="https://github.com/jbrown/todo-react-apollo-appsync"
-        target="_blank"
-        rel="noopener noreferrer"
-        title="View Github Repository"
-      >
-        <FontAwesomeIcon icon={faGithub} color="white" size="lg" />
-      </a>
+      <Flex>
+        <HeaderSocialLink
+          url="https://www.linkedin.com/in/justinandrewbrown/"
+          title="Contact me on Linkedin"
+          icon={faLinkedin}
+        />
+        <HeaderSocialLink
+          url="https://github.com/jbrown/todo-react-apollo-appsync"
+          title="View Github Repository"
+          icon={faGithub}
+        />
+      </Flex>
     </Flex>
   );
 };
