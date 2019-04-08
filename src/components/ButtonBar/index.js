@@ -9,9 +9,11 @@ export const ButtonBar = styled(Flex)`
 ButtonBar.Button = styled(Flex).attrs({
   alignItems: "center",
   flex: 1,
-  justifyContent: "center"
+  justifyContent: "center",
+  p: 2
 })`
   border-right: 1px solid ${props => props.theme.colors.borderGray};
+  cursor: pointer;
   &:last-child {
     border-right: 0;
   }

@@ -3,7 +3,9 @@ import { Hub } from "aws-amplify";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import { filter } from "graphql-anywhere";
-import { IconButton, Text, ToggleBadge } from "pcln-design-system";
+import { Text, ToggleBadge } from "pcln-design-system";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { Box, ButtonBar, Flex, QuickAdd } from "../../../components";
 import { TaskList } from "../../Task/List";
 
@@ -48,10 +50,10 @@ export const ListDetail = ({
         <React.Fragment>
           <ButtonBar mb={2} mx={2} width={0.2}>
             <ButtonBar.Button onClick={onCompleteSelected}>
-              <IconButton name="Check" color="gray" />
+              <FontAwesomeIcon icon={faCheck} color="#4f6f8f" />
             </ButtonBar.Button>
             <ButtonBar.Button onClick={onDeleteSelected}>
-              <IconButton name="Close" color="gray" />
+              <FontAwesomeIcon icon={faTrashAlt} color="#4f6f8f" />
             </ButtonBar.Button>
           </ButtonBar>
           <QuickAdd placeholder="Add Task" onSubmit={onCreate} mx={2} mb={2} />
