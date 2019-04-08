@@ -61,7 +61,6 @@ const App = ({ createTask, deleteTask, updateTask }) => {
           flex={1}
           ml={2}
           selectedTasks={selectedTasks}
-          onDelete={deleteTask}
           onClearSelection={() => setSelectedTasks([])}
         />
       </Flex>
