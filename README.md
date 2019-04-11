@@ -1,68 +1,80 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[![amplifybutton](https://oneclick.amplifyapp.com/button.svg)](https://console.aws.amazon.com/amplify/home#/deploy?repo=https://github.com/jbrown/todo-react-apollo-appsync)
 
-## Available Scripts
+## Repository Design
 
-In the project directory, you can run:
+The components are organized into two main directories, `/features` and `/components`. Feature directories contain the component hierarchies and code related to a specific feature of the application while any components that are used by more than one feature live in the `/components` directory. Inside a feature directory, the directory structure mimics the component hierarchy. This sets a convention which makes it easier to reason about import statements and component names.
 
-### `npm start`
+```
+/features/List/index.js
+/features/List/Sidebar/index.js
+/features/List/Sidebar/Item/index.js
+```
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```javascript
+// features/List/index.js
+export * from "./Sidebar";
+```
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+```javascript
+// features/List/Sidebar/index.js
+import { filter } from "graphql-anywhere";
+import { ListSidebarItem } from "./Item";
 
-### `npm test`
+export const ListSidebar = ({ items }) => (
+  items.map(list => <ListSidebarItem {...filter(ListSidebarItem.fragment, list)} />)
+);
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+ListSidebar.fragment = gql`
+  fragment ListSidebarFragment on ListConnection {
+    items {
+      ...ListSidebarItemFragment
+    }
+    nextToken
+  }
+  ${ListSidebarItem.fragment}
+`;
 
-### `npm run build`
+export const sidebarQuery = gql`
+  query ListLists(
+    $filter: ModelListFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listLists(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      ...ListSidebarFragment
+    }
+  }
+  ${ListSidebar.fragment}
+`;
+```
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```javascript
+// features/List/Sidebar/Item/index.js
+export const ListSidebarItem = ({ id, name }) => <div>{name}</div>;
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+ListSidebarItem.fragment = gql`
+  fragment ListSidebarItemFragment on List {
+    id
+    name
+  }
+`;
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+**Conventions:**
 
-### `npm run eject`
+- Components that display data define a graphql fragment for those fields and expose it as the `fragment` property on the component. These fragments are composed up the hierarchy and eventually used inside a query definition. When rendering down the hierarchy, the `filter` helper from `graphql-anywhere` is used to pass exactly the attributes each component expects.
+- Components are named after their path in the directory structure. e.g. `/features/List/Sidebar/Item` should be named `ListSidebarItem`
+- Queries live with the components that consume them, they should also be composed of the fragments for the subcomponents that will display the resulting data.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+**Rules:**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. Components in the `/components` directory may not import any code from the `/features` directory.
+2. Components in the `/features` directory may import code from any subdirectories, but not from parent directories.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Other Considerations
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Throughout the project named exports are used instead of default exports simply because it maintains naming consistency in import statements. In the future, any refactoring involving naming will be much easier.
 
-## Learn More
+## Deployment
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+This is an AWS Amplify app and I personally deploy it using the Amplify Console CD service.
