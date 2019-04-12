@@ -1797,7 +1797,7 @@ autoprefixer@^9.4.2:
     postcss "^7.0.14"
     postcss-value-parser "^3.3.1"
 
-aws-amplify@^1.1.24:
+aws-amplify@^1.1.26:
   version "1.1.26"
   resolved "https://registry.yarnpkg.com/aws-amplify/-/aws-amplify-1.1.26.tgz#fc87e9a0ec842cc11d88c16dbfb3967d3edf0c71"
   integrity sha512-T8R3n0HZgvA9GDO0jA24HLmhy9Jk/XwqZA5Fia0g+Pc1lnAHZ+bZHL1lO/VNz7BgbXYuq7kUhXsxexS07Fmsyw==
