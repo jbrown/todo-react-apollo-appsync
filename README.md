@@ -1,5 +1,26 @@
 [![amplifybutton](https://oneclick.amplifyapp.com/button.svg)](https://console.aws.amazon.com/amplify/home#/deploy?repo=https://github.com/jbrown/todo-react-apollo-appsync)
 
+## About
+
+This is the app I wish I had found when I was first learning React, Apollo, GraphQL, and AppSync. It's a little more advanced than the basic todo examples you'll find in most blog posts.
+
+## Install
+
+The backend runs on [AWS Amplify](https://aws-amplify.github.io/docs/). You'll need to install the cli utility and configure it with your AWS account credentials. Then just tell it to `push` and the backend will be deployed for you automatically.
+
+```shell
+$ npm install -g @aws-amplify/cli
+$ amplify configure
+$ amplify push
+```
+
+Install your dependencies and start the local React server.
+
+```shell
+$ yarn
+$ yarn start
+```
+
 ## Repository Design
 
 The components are organized into two main directories, `/features` and `/components`. Feature directories contain the component hierarchies and code related to a specific feature of the application while any components that are used by more than one feature live in the `/components` directory. Inside a feature directory, the directory structure mimics the component hierarchy. This sets a convention which makes it easier to reason about import statements and component names.
