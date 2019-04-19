@@ -13,7 +13,7 @@ export const ListSidebar = ({ selectedList, onSelectList, ...props }) => {
   return (
     <Query
       query={sidebarQuery}
-      fetchPolicy="cache-and-network"
+      fetchPolicy="network-only"
       variables={{ ...ListSidebar.sidebarQueryDefaultVariables }}
       onCompleted={data => {
         if (!selectedList && data.listLists.items.length > 0) {
@@ -38,6 +38,7 @@ export const ListSidebar = ({ selectedList, onSelectList, ...props }) => {
                 name={isShowingCreateForm ? "BoxMinus" : "BoxPlus"}
                 size={24}
                 color="black"
+                data-test-id="new-list-btn"
                 onClick={() => setIsShowingCreateForm(!isShowingCreateForm)}
               />
             </Flex>
@@ -52,6 +53,7 @@ export const ListSidebar = ({ selectedList, onSelectList, ...props }) => {
                     mb={2}
                     mr={2}
                     placeholder="Add List"
+                    data-test-id="new-list-form"
                     onSubmit={name =>
                       createList({
                         optimisticResponse: {
