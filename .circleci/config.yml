@@ -5,6 +5,7 @@ workflows:
   build:
     jobs:
       - cypress/run:
+          executor: cypress/browsers-chrome69
           browser: chrome
           start: npm start
           wait-on: "http://localhost:3000"
