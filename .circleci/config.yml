@@ -4,5 +4,11 @@ orbs:
 workflows:
   build:
     jobs:
+      - cypress/install:
+        build: yarn run build
       - cypress/run:
-          yarn: true
+        requires:
+          - cypress/install
+        start: yarn start
+        wait-on: "http://localhost:3000"
+        yarn: true
