@@ -11,6 +11,7 @@ const ListItemWrapper = styled(Flex)`
 
 export const ListSidebarItem = ({ isSelected, name, tasks, onClick }) => (
   <ListItemWrapper
+    className="ListSidebarItem"
     flexDirection="row"
     my={1}
     px={2}
@@ -18,7 +19,9 @@ export const ListSidebarItem = ({ isSelected, name, tasks, onClick }) => (
     bg={isSelected ? "#fff" : null}
     onClick={onClick}
   >
-    <Box flex={1}>{name}</Box>
+    <Box flex={1} className="ListSidebarItem__name">
+      {name}
+    </Box>
     {tasks.items.length > 0 ? <Badge>{tasks.items.length}</Badge> : null}
   </ListItemWrapper>
 );
