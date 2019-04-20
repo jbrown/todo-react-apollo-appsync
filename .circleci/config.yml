@@ -7,6 +7,8 @@ jobs:
     docker:
       - image: cypress/base:10
     steps:
+      - aws-cli/install
+      - aws-cli/configure
       - run:
           name: "Install Amplify"
           command: npm install -g @aws-amplify/cli
@@ -14,7 +16,12 @@ workflows:
   build:
     jobs:
       - install-amplify
+      - cypress/install:
+          requires:
+            - install-amplify
       - cypress/run:
+          requires:
+            - cypress/install
           executor: cypress/browsers-chrome69
           browser: chrome
           start: npm start
