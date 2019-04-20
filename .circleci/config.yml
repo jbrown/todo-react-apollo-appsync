@@ -2,11 +2,18 @@ version: 2.1
 orbs:
   aws-cli: circleci/aws-cli@0.1.13
   cypress: cypress-io/cypress@1.6.0
+jobs:
+  install-amplify:
+    docker:
+      - image: cypress/base:10
+    steps:
+      - run:
+          name: "Install Amplify"
+          command: npm install -g @aws-amplify/cli
 workflows:
   build:
     jobs:
-      - aws-cli/install
-      - aws-cli/configure
+      - install-amplify
       - cypress/run:
           executor: cypress/browsers-chrome69
           browser: chrome
