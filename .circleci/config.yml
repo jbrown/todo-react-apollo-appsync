@@ -1,9 +1,12 @@
 version: 2.1
 orbs:
+  aws-cli: circleci/aws-cli@0.1.13
   cypress: cypress-io/cypress@1.6.0
 workflows:
   build:
     jobs:
+      - aws-cli/install
+      - aws-cli/configure
       - cypress/run:
           executor: cypress/browsers-chrome69
           browser: chrome
