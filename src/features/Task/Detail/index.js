@@ -12,6 +12,16 @@ import { PriorityIndicator, TagList } from "../index";
 
 export const TaskDetail = ({ selectedTasks, onClearSelection, ...props }) => {
   let [selectedTask] = selectedTasks;
+  useEffect(() => {
+    if (selectedTask) {
+      Hub.dispatch("ga", {
+        event: "viewTask",
+        data: {
+          name: selectedTask.name
+        }
+      });
+    }
+  }, [selectedTask]);
 
   if (!selectedTask) {
     return null;
@@ -33,15 +43,6 @@ export const TaskDetail = ({ selectedTasks, onClearSelection, ...props }) => {
       </Flex>
     );
   } else {
-    useEffect(() => {
-      Hub.dispatch("ga", {
-        event: "viewTask",
-        data: {
-          name: selectedTask.name
-        }
-      });
-    }, [selectedTask]);
-
     return (
       <Flex {...props} flexDirection="column" p={2} bg="#fff" borderRadius={6}>
         <Query query={taskDetailQuery} variables={{ id: selectedTasks[0].id }}>
