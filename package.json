@@ -16,7 +16,7 @@
     "pcln-design-system": "^2.0.4",
     "polished": "^3.3.0",
     "react": "^16.8.6",
-    "react-apollo": "^2.5.4",
+    "react-apollo": "^2.5.5",
     "react-dom": "^16.8.6",
     "react-ga": "^2.5.7",
     "react-github-btn": "^1.0.5",
