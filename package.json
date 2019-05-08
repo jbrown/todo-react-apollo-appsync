@@ -22,7 +22,7 @@
     "react-github-btn": "^1.0.5",
     "react-scripts": "^3.0.1",
     "styled-components": "^4.2.0",
-    "styled-system": "^4.2.1"
+    "styled-system": "^4.2.2"
   },
   "scripts": {
     "start": "REACT_APP_ENVIRONMENT=dev react-scripts start",
