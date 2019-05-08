@@ -13,7 +13,7 @@
     "date-fns": "^2.0.0-alpha.27",
     "graphql-anywhere": "^4.2.1",
     "graphql-tag": "^2.10.1",
-    "pcln-design-system": "^2.0.4",
+    "pcln-design-system": "^2.0.6",
     "polished": "^3.3.0",
     "react": "^16.8.6",
     "react-apollo": "^2.5.5",

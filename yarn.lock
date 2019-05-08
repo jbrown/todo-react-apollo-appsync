@@ -8062,10 +8062,10 @@ pbkdf2@^3.0.3:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-pcln-design-system@^2.0.4:
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/pcln-design-system/-/pcln-design-system-2.0.5.tgz#66ab57dd4f11ca200ee2056609652d312b8f5f93"
-  integrity sha512-LhMc2Mkw6UaWagn7vNrMpg26psNbc3DIBg1xPZzwYfyIgE2SLtIf6zjHo9CI3xHF/drA/4hGsBtiooF9JldzTw==
+pcln-design-system@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/pcln-design-system/-/pcln-design-system-2.0.6.tgz#080c9127a60ec0f06c6425d2c523d03df8c7830e"
+  integrity sha512-v/OXcwLnREVnLdb5WUC+zjQw+ThPieQP9wvy+UfTNV0EjPO80zCjRF2AP65cSsxInGrTMza/XCepLtYxIOj5gA==
   dependencies:
     pcln-icons "^2.0.4"
     prop-types "^15.7.2"
