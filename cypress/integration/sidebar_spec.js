@@ -1,4 +1,3 @@
-import awsconfig from "../../src/aws-exports";
 import uuidV4 from "uuid/v4";
 
 function deferred() {
@@ -54,7 +53,7 @@ describe("The sidebar", function() {
         fetchStub = cy.stub(win, "fetch");
         fetchStub
           .withArgs(
-            awsconfig.aws_appsync_graphqlEndpoint,
+            Cypress.sinon.match("graphql"),
             Cypress.sinon.match(value => {
               //console.log("matcher", value, JSON.parse(value.body));
               let body = JSON.parse(value.body);
@@ -106,7 +105,7 @@ describe("The sidebar", function() {
     it("allows creating a new list", function() {
       fetchStub
         .withArgs(
-          awsconfig.aws_appsync_graphqlEndpoint,
+          Cypress.sinon.match("graphql"),
           Cypress.sinon.match(value => {
             //console.log("matcher", value, JSON.parse(value.body));
             let body = JSON.parse(value.body);
