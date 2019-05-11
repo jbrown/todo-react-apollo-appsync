@@ -61,14 +61,35 @@ function createMockFactory(__typename, defaults) {
     );
 }
 
+export const mockCommentConnection = createMockFactory(
+  "ModelCommentConnection",
+  () => ({
+    items: [],
+    nextToken: null
+  })
+);
 export const mockTaskConnection = createMockFactory(
   "ModelTaskConnection",
   () => ({
-    items: []
+    items: [],
+    nextToken: null
   })
 );
 export const mockList = createMockFactory("List", () => ({
   id: uuidV4(),
   name: "Test",
   tasks: mockTaskConnection()
+}));
+
+export const mockTask = createMockFactory("Task", () => ({
+  id: uuidV4(),
+  name: "Test",
+  completed: false,
+  createdAt: "123",
+  updatedAt: "123",
+  tags: [],
+  version: 1,
+  list: null,
+  priority: null,
+  comments: mockCommentConnection()
 }));
