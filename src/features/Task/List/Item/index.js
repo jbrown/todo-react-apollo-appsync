@@ -21,6 +21,7 @@ export const TaskListItem = ({
     px={2}
     py={1}
     onClick={onClick}
+    data-test-id="task-list-item"
   >
     <PriorityIndicator mr={1} priority={priority} />
     <Icon

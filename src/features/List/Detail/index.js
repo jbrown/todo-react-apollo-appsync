@@ -56,7 +56,13 @@ export const ListDetail = ({
               <FontAwesomeIcon icon={faTrashAlt} color="#4f6f8f" />
             </ButtonBar.Button>
           </ButtonBar>
-          <QuickAdd placeholder="Add Task" onSubmit={onCreate} mx={2} mb={2} />
+          <QuickAdd
+            placeholder="Add Task"
+            data-test-id="new-task-form"
+            onSubmit={onCreate}
+            mx={2}
+            mb={2}
+          />
         </React.Fragment>
       ) : null}
 
@@ -115,7 +121,7 @@ ListDetail.listDetailQueryDefaultVariables = {
 };
 
 export const listDetailQuery = gql`
-  query getList(
+  query GetList(
     $id: ID!
     $filter: ModelTaskFilterInput
     $sortDirection: ModelSortDirection
