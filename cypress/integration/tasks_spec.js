@@ -10,11 +10,9 @@ import {
 
 describe("List detail", function() {
   let fetchStub;
-  let fetchListsDeferred;
   let fetchListDetailDeferred;
 
   beforeEach(function() {
-    fetchListsDeferred = deferred();
     fetchListDetailDeferred = deferred();
     cy.visit("/", {
       onBeforeLoad: win => {
