@@ -6,7 +6,8 @@ import { filter } from "graphql-anywhere";
 import { Text, ToggleBadge } from "pcln-design-system";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import { Box, ButtonBar, Flex, QuickAdd } from "../../../components";
+import { Flex } from "jbrown-design-system";
+import { Box, ButtonBar, QuickAdd } from "../../../components";
 import { TaskList } from "../../Task/List";
 
 export const ListDetail = ({

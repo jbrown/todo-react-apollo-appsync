@@ -3,7 +3,8 @@ import { IconButton, OutlineButton } from "pcln-design-system";
 import { Query, Mutation } from "react-apollo";
 import gql from "graphql-tag";
 import { filter } from "graphql-anywhere";
-import { Box, Flex, QuickAdd } from "../../../components";
+import { Box, QuickAdd } from "../../../components";
+import { Flex } from "jbrown-design-system";
 import { updateCreateList, updateListsFetchMore } from "../graphql";
 import { ListSidebarItem } from "./Item";
 
