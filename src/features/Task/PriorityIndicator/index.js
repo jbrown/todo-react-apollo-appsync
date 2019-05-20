@@ -1,5 +1,5 @@
 import React from "react";
-import { Box } from "../../../components";
+import { Box } from "jbrown-design-system";
 
 const colorForPriority = {
   NO_PRIORITY: "borderGray",
