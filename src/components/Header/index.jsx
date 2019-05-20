@@ -1,7 +1,6 @@
 import React from "react";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
-import { Heading } from "pcln-design-system";
-import { Box, Flex } from "jbrown-design-system";
+import { Box, Flex, Heading } from "jbrown-design-system";
 import { HeaderSocialLink } from "./SocialLink";
 import GitHubButton from "react-github-btn";
 
