@@ -1,8 +1,8 @@
 import React from "react";
 import gql from "graphql-tag";
 import styled from "styled-components";
-import { Icon, Text } from "pcln-design-system";
-import { Flex } from "jbrown-design-system";
+import { Icon } from "pcln-design-system";
+import { Flex, Text } from "jbrown-design-system";
 import { PriorityIndicator, TagList } from "../../index";
 
 export const TaskListItem = ({
