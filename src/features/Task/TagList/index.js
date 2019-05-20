@@ -1,5 +1,5 @@
 import React from "react";
-import { Badge } from "pcln-design-system";
+import { Badge } from "jbrown-design-system";
 
 const colors = ["lightBlue", "lightGreen", "lightRed", "lightOrange"];
 

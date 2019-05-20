@@ -1,8 +1,7 @@
 import React from "react";
 import gql from "graphql-tag";
 import styled from "styled-components";
-import { Badge } from "pcln-design-system";
-import { Box, Flex } from "jbrown-design-system";
+import { Badge, Box, Flex } from "jbrown-design-system";
 
 const ListItemWrapper = styled(Flex)`
   border-top-left-radius: 6px;
