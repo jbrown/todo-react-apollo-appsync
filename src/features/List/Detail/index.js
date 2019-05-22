@@ -3,10 +3,9 @@ import { Hub } from "aws-amplify";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import { filter } from "graphql-anywhere";
-import { ToggleBadge } from "pcln-design-system";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import { Box, Flex, Text } from "jbrown-design-system";
+import { Box, Flex, Text, ToggleBadge } from "jbrown-design-system";
 import { ButtonBar, QuickAdd } from "../../../components";
 import { TaskList } from "../../Task/List";
 
