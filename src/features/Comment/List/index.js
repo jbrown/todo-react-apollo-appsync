@@ -1,7 +1,7 @@
 import React from "react";
 import gql from "graphql-tag";
 import { filter } from "graphql-anywhere";
-import { Card } from "pcln-design-system";
+import { Card } from "jbrown-design-system";
 import { CommentListItem } from "./Item";
 
 export const CommentList = ({ comments: { items } }) => (
