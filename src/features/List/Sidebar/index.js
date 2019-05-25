@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { IconButton } from "pcln-design-system";
 import { Query, Mutation } from "react-apollo";
 import gql from "graphql-tag";
 import { filter } from "graphql-anywhere";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMinusSquare, faPlusSquare } from "@fortawesome/free-solid-svg-icons";
 import { QuickAdd } from "../../../components";
 import { Box, Flex, OutlineButton } from "jbrown-design-system";
 import { updateCreateList, updateListsFetchMore } from "../graphql";
@@ -35,10 +36,9 @@ export const ListSidebar = ({ selectedList, onSelectList, ...props }) => {
           <Flex {...props} flexDirection="column">
             <Flex flexDirection="row" m={2}>
               <Box flex={1}>Lists ({data.listLists.items.length})</Box>
-              <IconButton
-                name={isShowingCreateForm ? "BoxMinus" : "BoxPlus"}
-                size={24}
-                color="black"
+              <FontAwesomeIcon
+                icon={isShowingCreateForm ? faMinusSquare : faPlusSquare}
+                color="#999"
                 data-test-id="new-list-btn"
                 onClick={() => setIsShowingCreateForm(!isShowingCreateForm)}
               />
