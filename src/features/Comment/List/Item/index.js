@@ -1,7 +1,7 @@
 import React from "react";
 import gql from "graphql-tag";
 import { formatDistance, parseISO } from "date-fns";
-import { Box } from "../../../../components";
+import { Box } from "jbrown-design-system";
 
 export const CommentListItem = ({ content, createdAt }) => (
   <div>

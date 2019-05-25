@@ -5,8 +5,8 @@ import * as serviceWorker from "./serviceWorker";
 
 import { Hub } from "aws-amplify";
 import ReactGA from "react-ga";
-import { ThemeProvider } from "pcln-design-system";
-import { createGlobalStyle } from "styled-components";
+import { theme } from "jbrown-design-system";
+import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { normalize } from "polished";
 
 import Client from "aws-appsync";
@@ -34,6 +34,12 @@ const client = new Client({
 const GlobalStyle = createGlobalStyle`
   ${normalize()}
 
+  * {
+    font-family: ${props => props.theme.font};
+    line-height: ${props => props.theme.lineHeights.standard};
+    font-weight: ${props => props.theme.fontWeights.medium};
+  }
+
   html,
   body,
   #root,
@@ -53,7 +59,7 @@ const WithProvider = () => {
   return (
     <ApolloProvider client={client}>
       <Rehydrated>
-        <ThemeProvider className="theme-provider-hoc">
+        <ThemeProvider theme={theme} className="theme-provider-hoc">
           <React.Fragment>
             <GlobalStyle />
             <App />

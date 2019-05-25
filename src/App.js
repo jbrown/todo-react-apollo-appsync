@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { compose, graphql } from "react-apollo";
-import { Flex, Header } from "./components";
+import { Header } from "./components";
+import { Flex } from "jbrown-design-system";
 import { ListDetail, ListSidebar, TaskDetail } from "./features";
 import {
   createTaskMutation,

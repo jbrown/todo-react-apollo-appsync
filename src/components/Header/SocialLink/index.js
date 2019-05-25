@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Box } from "../../index";
+import { Box } from "jbrown-design-system";
 
 export const HeaderSocialLink = ({ url, icon, title }) => (
   <Box pl={2}>

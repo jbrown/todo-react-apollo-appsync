@@ -1,8 +1,9 @@
 import React from "react";
 import gql from "graphql-tag";
 import styled from "styled-components";
-import { Icon, Text } from "pcln-design-system";
-import { Flex } from "../../../../components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheckSquare, faSquare } from "@fortawesome/free-solid-svg-icons";
+import { Flex, Text } from "jbrown-design-system";
 import { PriorityIndicator, TagList } from "../../index";
 
 export const TaskListItem = ({
@@ -24,10 +25,9 @@ export const TaskListItem = ({
     data-test-id="task-list-item"
   >
     <PriorityIndicator mr={1} priority={priority} />
-    <Icon
-      name={isSelected ? "BoxChecked" : "BoxEmpty"}
-      size={18}
-      color="blue"
+    <FontAwesomeIcon
+      icon={isSelected ? faCheckSquare : faSquare}
+      color="#999"
     />
     <Text mx={1}>{name}</Text>
     <TagList tags={tags} />
