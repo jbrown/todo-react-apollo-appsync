@@ -2,6 +2,8 @@
 
 # cypress
 /cypress/integration/examples
+/cypress/videos
+/cypress/screenshots
 
 # dependencies
 /node_modules

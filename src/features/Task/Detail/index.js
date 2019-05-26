@@ -3,8 +3,8 @@ import { Hub } from "aws-amplify";
 import gql from "graphql-tag";
 import { filter } from "graphql-anywhere";
 import { Mutation, Query } from "react-apollo";
-import { OutlineButton, Text } from "pcln-design-system";
-import { Box, Flex, QuickAdd } from "../../../components";
+import { Box, Flex, OutlineButton, Text } from "jbrown-design-system";
+import { QuickAdd } from "../../../components";
 import { updateCreateComment } from "../../Comment/graphql";
 import { createCommentMutation } from "../../Comment/graphql";
 import { CommentList } from "../../Comment/List";
@@ -12,6 +12,16 @@ import { PriorityIndicator, TagList } from "../index";
 
 export const TaskDetail = ({ selectedTasks, onClearSelection, ...props }) => {
   let [selectedTask] = selectedTasks;
+  useEffect(() => {
+    if (selectedTask) {
+      Hub.dispatch("ga", {
+        event: "viewTask",
+        data: {
+          name: selectedTask.name
+        }
+      });
+    }
+  }, [selectedTask]);
 
   if (!selectedTask) {
     return null;
@@ -33,15 +43,6 @@ export const TaskDetail = ({ selectedTasks, onClearSelection, ...props }) => {
       </Flex>
     );
   } else {
-    useEffect(() => {
-      Hub.dispatch("ga", {
-        event: "viewTask",
-        data: {
-          name: selectedTask.name
-        }
-      });
-    }, [selectedTask]);
-
     return (
       <Flex {...props} flexDirection="column" p={2} bg="#fff" borderRadius={6}>
         <Query query={taskDetailQuery} variables={{ id: selectedTasks[0].id }}>

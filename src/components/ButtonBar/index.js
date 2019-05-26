@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Flex } from "../Flex";
+import { Flex } from "jbrown-design-system";
 
 export const ButtonBar = styled(Flex)`
   border: 1px solid ${props => props.theme.colors.borderGray};

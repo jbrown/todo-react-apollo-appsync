@@ -1,6 +1,5 @@
 import React from "react";
-import { Button, Input } from "pcln-design-system";
-import { Flex } from "../index";
+import { Button, Flex, Input } from "jbrown-design-system";
 
 export class QuickAdd extends React.Component {
   state = {

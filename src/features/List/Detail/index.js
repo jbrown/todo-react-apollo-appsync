@@ -3,10 +3,10 @@ import { Hub } from "aws-amplify";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import { filter } from "graphql-anywhere";
-import { Text, ToggleBadge } from "pcln-design-system";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import { Box, ButtonBar, Flex, QuickAdd } from "../../../components";
+import { Box, Flex, Text, ToggleBadge } from "jbrown-design-system";
+import { ButtonBar, QuickAdd } from "../../../components";
 import { TaskList } from "../../Task/List";
 
 export const ListDetail = ({
@@ -56,7 +56,13 @@ export const ListDetail = ({
               <FontAwesomeIcon icon={faTrashAlt} color="#4f6f8f" />
             </ButtonBar.Button>
           </ButtonBar>
-          <QuickAdd placeholder="Add Task" onSubmit={onCreate} mx={2} mb={2} />
+          <QuickAdd
+            placeholder="Add Task"
+            data-test-id="new-task-form"
+            onSubmit={onCreate}
+            mx={2}
+            mb={2}
+          />
         </React.Fragment>
       ) : null}
 
@@ -115,7 +121,7 @@ ListDetail.listDetailQueryDefaultVariables = {
 };
 
 export const listDetailQuery = gql`
-  query getList(
+  query GetList(
     $id: ID!
     $filter: ModelTaskFilterInput
     $sortDirection: ModelSortDirection

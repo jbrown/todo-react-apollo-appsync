@@ -1,46 +1,10 @@
-import uuidV4 from "uuid/v4";
-
-function deferred() {
-  const deferred = {};
-  /* global Promise */
-  deferred.promise = new Promise((resolve, reject) => {
-    deferred.resolve = resolve;
-    deferred.reject = reject;
-  });
-  return deferred;
-}
-
-function jsonOk(body) {
-  var mockResponse = new window.Response(JSON.stringify(body), {
-    //the fetch API returns a resolved window Response object
-    status: 200,
-    headers: {
-      "Content-type": "application/json"
-    }
-  });
-
-  return Promise.resolve(mockResponse);
-}
-
-function createMockFactory(__typename, defaults) {
-  return params =>
-    Object.assign(
-      {
-        __typename
-      },
-      defaults(),
-      params
-    );
-}
-
-const mockTaskConnection = createMockFactory("ModelTaskConnection", () => ({
-  items: []
-}));
-const mockList = createMockFactory("List", () => ({
-  id: uuidV4(),
-  name: "Test",
-  tasks: mockTaskConnection()
-}));
+import {
+  deferred,
+  jsonOk,
+  matchGraphqlOperation,
+  mockList,
+  mockTaskConnection
+} from "../support";
 
 describe("The sidebar", function() {
   let fetchStub;
@@ -53,12 +17,8 @@ describe("The sidebar", function() {
         fetchStub = cy.stub(win, "fetch");
         fetchStub
           .withArgs(
-            Cypress.sinon.match.string,
-            Cypress.sinon.match(value => {
-              //console.log("matcher", value, JSON.parse(value.body));
-              let body = JSON.parse(value.body);
-              return body.operationName === "ListLists";
-            })
+            Cypress.sinon.match("graphql"),
+            Cypress.sinon.match(matchGraphqlOperation("ListLists"))
           )
           .as("fetchLists")
           .returns(fetchListsDeferred.promise);
@@ -105,12 +65,8 @@ describe("The sidebar", function() {
     it("allows creating a new list", function() {
       fetchStub
         .withArgs(
-          Cypress.sinon.match.string,
-          Cypress.sinon.match(value => {
-            //console.log("matcher", value, JSON.parse(value.body));
-            let body = JSON.parse(value.body);
-            return body.operationName === "CreateList";
-          })
+          Cypress.sinon.match("graphql"),
+          Cypress.sinon.match(matchGraphqlOperation("CreateList"))
         )
         .as("createList")
         .returns(
