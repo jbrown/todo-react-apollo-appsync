@@ -1,0 +1,12 @@
+version: 2.1
+orbs:
+  cypress: cypress-io/cypress@1.7.0
+workflows:
+  build:
+    jobs:
+      - cypress/run:
+          executor: cypress/browsers-chrome69
+          browser: chrome
+          start: npm start
+          wait-on: "http://localhost:3000"
+          yarn: true
