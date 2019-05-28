@@ -14,7 +14,7 @@
     "graphql-anywhere": "^4.2.2",
     "graphql-tag": "^2.10.1",
     "jbrown-design-system": "^0.4.0",
-    "polished": "^3.3.0",
+    "polished": "^3.4.0",
     "react": "^16.8.6",
     "react-apollo": "^2.5.5",
     "react-dom": "^16.8.6",
