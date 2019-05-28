@@ -1675,11 +1675,6 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
-"@types/graphql@0.12.6":
-  version "0.12.6"
-  resolved "https://registry.yarnpkg.com/@types/graphql/-/graphql-0.12.6.tgz#3d619198585fcabe5f4e1adfb5cf5f3388c66c13"
-  integrity sha512-wXAVyLfkG1UMkKOdMijVWFky39+OD/41KftzqfX1Oejd0Gm6dOIKjCihSVECg6X7PHjftxXmfOKA/d1H79ZfvQ==
-
 "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@types/istanbul-lib-coverage/-/istanbul-lib-coverage-2.0.1.tgz#42995b446db9a48a11a07ec083499a860e9138ff"
@@ -2162,14 +2157,13 @@ apollo-link-retry@2.2.5:
     "@types/zen-observable" "0.8.0"
     apollo-link "^1.2.3"
 
-apollo-link@1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/apollo-link/-/apollo-link-1.2.2.tgz#54c84199b18ac1af8d63553a68ca389c05217a03"
-  integrity sha512-Uk/BC09dm61DZRDSu52nGq0nFhq7mcBPTjy5EEH1eunJndtCaNXQhQz/BjkI2NdrfGI+B+i5he6YSoRBhYizdw==
+apollo-link@1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/apollo-link/-/apollo-link-1.2.3.tgz#9bd8d5fe1d88d31dc91dae9ecc22474d451fb70d"
+  integrity sha512-iL9yS2OfxYhigme5bpTbmRyC+Htt6tyo2fRMHT3K1XRL/C5IQDDz37OjpPy4ndx7WInSvfSZaaOTKFja9VWqSw==
   dependencies:
-    "@types/graphql" "0.12.6"
     apollo-utilities "^1.0.0"
-    zen-observable-ts "^0.8.9"
+    zen-observable-ts "^0.8.10"
 
 apollo-link@^1.0.0, apollo-link@^1.0.6, apollo-link@^1.2.11, apollo-link@^1.2.3:
   version "1.2.11"
@@ -2420,15 +2414,15 @@ aws-appsync-react@^1.2.7:
   dependencies:
     prop-types "^15.6.0"
 
-aws-appsync@^1.7.2:
-  version "1.7.2"
-  resolved "https://registry.yarnpkg.com/aws-appsync/-/aws-appsync-1.7.2.tgz#8043dcf587dcfac6691fe131d0c4ab56f1fd46e8"
-  integrity sha512-bYrqLBeQVyAsKpRR+dGibk5GRgSV7IYA2sd2kqRPytA9QRv3idyCUFIa72v81qNLFHTznxk1GNo54mdNmJ9Jtg==
+aws-appsync@^1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/aws-appsync/-/aws-appsync-1.8.0.tgz#3418815d4e713656c8caf3bff12219710cc9bdba"
+  integrity sha512-FQIBLC5pAXf5jHdvw8afUJ5iPZjenDf2Kf7aUHJr7Zz42wO6YdS4H2hfAXSZg6rXDHD95+Q669/Dhji4LinChw==
   dependencies:
     "@redux-offline/redux-offline" "2.2.1"
     apollo-cache-inmemory "1.3.10"
     apollo-client "2.4.6"
-    apollo-link "1.2.2"
+    apollo-link "1.2.3"
     apollo-link-context "1.0.9"
     apollo-link-http "1.3.1"
     apollo-link-retry "2.2.5"
@@ -11472,7 +11466,7 @@ yauzl@2.4.1:
   dependencies:
     fd-slicer "~1.0.1"
 
-zen-observable-ts@^0.8.18, zen-observable-ts@^0.8.9:
+zen-observable-ts@^0.8.10, zen-observable-ts@^0.8.18:
   version "0.8.18"
   resolved "https://registry.yarnpkg.com/zen-observable-ts/-/zen-observable-ts-0.8.18.tgz#ade44b1060cc4a800627856ec10b9c67f5f639c8"
   integrity sha512-q7d05s75Rn1j39U5Oapg3HI2wzriVwERVo4N7uFGpIYuHB9ff02P/E92P9B8T7QVC93jCMHpbXH7X0eVR5LA7A==
