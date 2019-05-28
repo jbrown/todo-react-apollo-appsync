@@ -11,7 +11,7 @@
     "aws-appsync": "^1.8.0",
     "aws-appsync-react": "^1.2.8",
     "date-fns": "^2.0.0-alpha.27",
-    "graphql-anywhere": "^4.2.1",
+    "graphql-anywhere": "^4.2.2",
     "graphql-tag": "^2.10.1",
     "jbrown-design-system": "^0.4.0",
     "polished": "^3.3.0",
