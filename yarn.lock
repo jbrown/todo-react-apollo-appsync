@@ -2407,10 +2407,10 @@ aws-amplify@^1.1.28:
     "@aws-amplify/ui" "^1.0.19"
     "@aws-amplify/xr" "^0.1.17"
 
-aws-appsync-react@^1.2.7:
-  version "1.2.7"
-  resolved "https://registry.yarnpkg.com/aws-appsync-react/-/aws-appsync-react-1.2.7.tgz#c316e1a2ed510d10329f50828d55a985483368fc"
-  integrity sha512-uFPih4OIlw48y0SKFgk8G4PRSd61503P+bjeb1eUKS4Nt2NPBLMUqB1gQxZTbHw24XOxhCh+0p3rZMowDWgKVw==
+aws-appsync-react@^1.2.8:
+  version "1.2.8"
+  resolved "https://registry.yarnpkg.com/aws-appsync-react/-/aws-appsync-react-1.2.8.tgz#35feeda091d83bf7d91a86d944c176336d908781"
+  integrity sha512-S+YLz+I6Rt1++mqwd1hJeK84ERt0+kvXPE6cG5rmIYkx+BUe6rabE+d91IWkkUtq9HXOxpwHUrOyvCIQmV5OUg==
   dependencies:
     prop-types "^15.6.0"
 
