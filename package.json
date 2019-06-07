@@ -10,7 +10,7 @@
     "aws-amplify": "^1.1.28",
     "aws-appsync": "^1.8.0",
     "aws-appsync-react": "^1.2.8",
-    "date-fns": "^2.0.0-alpha.27",
+    "date-fns": "^2.0.0-alpha.31",
     "graphql-anywhere": "^4.2.4",
     "graphql-tag": "^2.10.1",
     "jbrown-design-system": "^0.4.0",
