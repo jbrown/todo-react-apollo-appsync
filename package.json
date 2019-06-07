@@ -21,7 +21,7 @@
     "react-ga": "^2.5.7",
     "react-github-btn": "^1.0.5",
     "react-scripts": "^3.0.1",
-    "styled-components": "^4.2.0"
+    "styled-components": "^4.3.1"
   },
   "scripts": {
     "start": "REACT_APP_ENVIRONMENT=dev react-scripts start",
