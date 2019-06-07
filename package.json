@@ -3,15 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.18",
-    "@fortawesome/free-brands-svg-icons": "^5.8.2",
-    "@fortawesome/free-solid-svg-icons": "^5.8.2",
+    "@fortawesome/fontawesome-svg-core": "^1.2.19",
+    "@fortawesome/free-brands-svg-icons": "^5.9.0",
+    "@fortawesome/free-solid-svg-icons": "^5.9.0",
     "@fortawesome/react-fontawesome": "^0.1.4",
     "aws-amplify": "^1.1.28",
     "aws-appsync": "^1.8.0",
     "aws-appsync-react": "^1.2.8",
-    "date-fns": "^2.0.0-alpha.27",
-    "graphql-anywhere": "^4.2.2",
+    "date-fns": "^2.0.0-alpha.31",
+    "graphql-anywhere": "^4.2.4",
     "graphql-tag": "^2.10.1",
     "jbrown-design-system": "^0.4.0",
     "polished": "^3.4.0",
@@ -21,7 +21,7 @@
     "react-ga": "^2.5.7",
     "react-github-btn": "^1.0.5",
     "react-scripts": "^3.0.1",
-    "styled-components": "^4.2.0"
+    "styled-components": "^4.3.1"
   },
   "scripts": {
     "start": "REACT_APP_ENVIRONMENT=dev react-scripts start",
